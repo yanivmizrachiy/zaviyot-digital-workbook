@@ -1,0 +1,4048 @@
+:root {
+  /* ============================================================
+     מערכת עיצוב — בהשראת Oak National Academy (thenational.academy):
+     פלטת פסטל שטוחה, בלי צללים, גופן גיאומטרי-מעוגל אחד לכל האתר,
+     כרטיסים מרובעים-חדים לתוכן ותגיות-גלולה לתוויות. נחקר ויושם
+     ב-2026-07-13 אך ורק עבור אתר הזוויות (zaviyot) — לא במספרים מכוונים.
+     ============================================================ */
+  --bg: #ffffff;
+  --surface: #ffffff;
+  --surface-soft: #f2f2f2;
+  --text: #222222;
+  --text-soft: #4a4a4a;
+  --muted: #767676;
+
+  /* כחול המותג (Oak: rgb(13,36,196)) — קישורים, CTA ראשי, מעלה חיובית */
+  --blue: #0d24c4;
+  --blue-strong: #091b93;
+  --blue-soft: #e7eafb;
+
+  /* אדום מאופק — מעלה/מצב שלילי, שגיאות בלבד */
+  --red: #c1272d;
+  --red-strong: #a01f24;
+  --red-soft: #fbeaea;
+
+  /* ירוק-מנטה (Oak: rgb(231,246,245) / rgb(190,242,189)) — תוויות ואקצנטים */
+  --teal: #1b6b4a;
+  --teal-soft: #e7f6f5;
+  --teal-line: #bef2bd;
+
+  /* צהוב (Oak: rgb(255,229,85) / rgb(255,247,204)) — היילייט ומילוי CTA, במקום הזהב */
+  --gold: #ffe555;
+  --gold-soft: #fff7cc;
+  --gold-line: #f2f2f2;
+
+  /* ירוק-הירו (Oak hero: rgb(190,242,189)) + לבנדר (rgb(189,205,245)) — בלוקי סקשן */
+  --green-hero: #bef2bd;
+  --green-hero-soft: #dff9de;
+  --lavender: #bdcdf5;
+
+  /* שמנת/היילייט — תיבות הערה (משפחת הצהוב של Oak) */
+  --cream: #fff7cc;
+  --cream-line: #ffe555;
+
+  /* כהה = נייבי (הכחול שהיה לפני העיצוב-מחדש) — רקעים כהים (טופבר-פס, פוטר,
+     מסגרות המציגים, רקע נגן הווידאו) וכפתור ראשי. הוחזר מ-#1c1c1c לבקשת יניב
+     כדי שלא יהיו רקעים שחורים. */
+  --ink: #11203c;
+  --on-dark: #f2f2f2;
+  --on-dark-soft: #c7c7c7;
+  --surface-on-dark: rgba(255, 255, 255, 0.08);
+  --border-on-dark: rgba(255, 255, 255, 0.16);
+
+  --border: #e4e4e4;
+  /* Oak שטוח לגמרי — אין צללים בשום מקום באתר */
+  --shadow-sm: none;
+  --shadow-md: none;
+  --shadow-lg: none;
+
+  --radius: 16px;
+  --radius-sm: 8px;
+  /* כפתורים אצל Oak כמעט מרובעים (4px), לא גלולה — התגיות/באדג׳ים נשארים גלולה */
+  --radius-btn: 4px;
+  --radius-pill: 999px;
+  --maxw: 1160px;
+  --nav-h: 56px;
+
+  /* סולם טיפוגרפי מודולרי (minor third ~1.2), נזיל למובייל */
+  --step--1: clamp(0.80rem, 0.77rem + 0.15vw, 0.875rem);
+  --step-0: clamp(1rem, 0.96rem + 0.2vw, 1.0625rem);
+  --step-1: clamp(1.15rem, 1.08rem + 0.35vw, 1.3rem);
+  --step-2: clamp(1.35rem, 1.22rem + 0.65vw, 1.65rem);
+  --step-3: clamp(1.65rem, 1.4rem + 1.2vw, 2.2rem);
+  --step-4: clamp(2.6rem, 1.9rem + 3.4vw, 4.4rem);
+
+  /* אחידות מלאה עם «מספרים מכוונים»: Assistant לגוף הטקסט (נטען ב-layout.tsx),
+     Rubik לכותרות. --font-assistant מגיע מטוען הגופנים של Next (הגופן Assistant האמיתי). */
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  /* צובעים את הקנבס כולו ברקע האתר — כך לעולם לא נחשף רקע שחור של הדפדפן/החלונית
+     בגלילה, ב-overscroll או בתצוגה מוטמעת. */
+  background: var(--bg);
+  min-height: 100%;
+}
+
+body {
+  min-height: 100dvh;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-assistant), system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+  font-size: var(--step-0);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-rubik), var(--font-assistant), system-ui, sans-serif;
+  line-height: 1.2;
+  margin: 0;
+  color: var(--text);
+}
+
+/* בעברית אין מסורת ריווח-אותיות — מבטלים tracking על טקסט */
+h1,
+h2,
+h3,
+h4,
+p,
+li {
+  letter-spacing: normal;
+}
+
+a {
+  color: inherit;
+}
+
+section[id] {
+  scroll-margin-top: calc(var(--nav-h) + 18px);
+}
+
+.container {
+  width: 100%;
+  max-width: var(--maxw);
+  margin-inline: auto;
+  padding-inline: 20px;
+}
+/* מכל מורחב לחוברת הדיגיטלית בלבד — מנצל מסכים רחבים לדפים גדולים יותר */
+.container--book {
+  max-width: min(1500px, 98.5vw);
+}
+
+/* ===== נגישות ===== */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+:where(a, button, [tabindex]):focus-visible,
+.btn:focus-visible {
+  outline: 3px solid var(--blue);
+  outline-offset: 3px;
+}
+.btn--primary:focus-visible,
+.btn--gold:focus-visible {
+  outline-color: var(--ink);
+  box-shadow: 0 0 0 5px rgba(255, 255, 255, 0.9);
+}
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* ===== כותרת עליונה (משרד / הדרכה) — מבנה Oak: פס שחור דק + הדר לבן ===== */
+.topbar {
+  background: var(--ink);
+  color: var(--on-dark);
+  border-bottom: 2px solid var(--gold);
+}
+/* רשת סימטרית: עמודת לוגו (1fr) · טקסט (auto) · עמודת-איזון (1fr).
+   שתי עמודות הצד שוות ושתיהן שומרות מינימום ברוחב הלוגו (--logo-s) —
+   כך בלוק הטקסט ממורכז מתמטית במרכז הדף, והלוגו לעולם לא יכול
+   לחפוף את הטקסט (הרשת עצמה מונעת זאת, בכל רוחב מסך). */
+.topbar__inner {
+  --logo-s: clamp(76px, 9vw, 124px);
+  display: grid;
+  grid-template-columns: minmax(var(--logo-s), 1fr) auto minmax(var(--logo-s), 1fr);
+  align-items: center;
+  column-gap: 16px;
+  padding-block: 16px;
+  text-align: center;
+}
+.topbar__text {
+  grid-column: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-width: 0;
+}
+/* הלוגו בגודל קבוע וחד (--logo-s, עד 124px — פחות מחצי מקובץ המקור 440px,
+   ולכן תמיד חד גם ב-DPR גבוה), ממורכז אנכית מול בלוק הטקסט.
+   הגודל אינו נגזר מגובה הטקסט — אין מתיחה ואין טשטוש. */
+.topbar__logobox {
+  grid-column: 1;
+  position: relative;
+  align-self: center;
+  justify-self: start;
+  width: var(--logo-s);
+  height: var(--logo-s);
+}
+.topbar__logo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  flex: none;
+  background: #fff;
+  border: 3px solid var(--gold);
+  box-shadow:
+    0 0 0 3px rgba(255, 255, 255, 0.14),
+    0 5px 16px rgba(0, 0, 0, 0.5),
+    0 0 22px rgba(194, 162, 78, 0.4);
+  object-fit: cover;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.topbar__logo:hover {
+  transform: scale(1.04) rotate(-2deg);
+  box-shadow:
+    0 0 0 3px rgba(255, 255, 255, 0.2),
+    0 6px 20px rgba(0, 0, 0, 0.55),
+    0 0 28px rgba(194, 162, 78, 0.6);
+}
+.topbar__lead {
+  font-family: var(--font-rubik), sans-serif;
+  font-size: var(--step-2);
+  font-weight: 700;
+  color: var(--gold);
+  line-height: 1.25;
+  max-width: 60rem;
+}
+.topbar__year {
+  font-family: var(--font-rubik), sans-serif;
+  font-size: calc(var(--step--1) * 2);
+  font-weight: 600;
+  color: #fff;
+  line-height: 1.2;
+}
+.topbar__credit {
+  font-size: var(--step--1);
+  line-height: 1.35;
+  color: var(--on-dark-soft);
+  background: var(--surface-on-dark);
+  border: 1px solid var(--border-on-dark);
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  white-space: nowrap;
+}
+
+/* ===== ניווט פנימי דביק ===== */
+.sitenav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(255, 255, 255, 0.86);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--gold-line);
+}
+.sitenav__inner {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-height: var(--nav-h);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.sitenav__inner::-webkit-scrollbar {
+  display: none;
+}
+.sitenav__link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  white-space: nowrap;
+  font-family: var(--font-rubik), sans-serif;
+  font-size: var(--step--1);
+  font-weight: 600;
+  color: var(--ink);
+  padding: 8px 14px;
+  border-radius: var(--radius-btn);
+  text-decoration: none;
+  transition: background 0.18s ease, color 0.18s ease;
+}
+.sitenav__link:hover {
+  /* Oak: פריטי ניווט שחורים; hover = קו-תחתון עבה, בלי רקע */
+  background: transparent;
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-thickness: 3px;
+  text-underline-offset: 6px;
+}
+
+/* ===== תפריט אביזרים נפתח (ניווט) ===== */
+.accnav {
+  position: relative;
+  display: inline-flex;
+}
+.accnav__btn {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  gap: 6px;
+}
+.accnav__btn--open {
+  background: var(--teal-soft);
+  color: var(--teal);
+}
+.accnav__chev {
+  transition: transform 0.18s ease;
+  opacity: 0.8;
+}
+.accnav__btn--open .accnav__chev {
+  transform: rotate(180deg);
+}
+/* התפריט מרונדר ב-portal אל body (position:fixed דרך style) */
+.accnav__menu {
+  min-width: 252px;
+  max-width: min(84vw, 330px);
+  background: var(--surface, #ffffff);
+  border: 1.5px solid var(--text, #222222);
+  border-radius: 14px;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  z-index: 200;
+  animation: accnavIn 0.16s ease both;
+}
+@keyframes accnavIn {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.accnav__head {
+  font-family: var(--font-rubik), sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  color: var(--text-soft, #54607a);
+  padding: 6px 12px 4px;
+}
+.accnav__item {
+  display: block;
+  font-family: var(--font-rubik), sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text, #11203c);
+  text-align: right;
+  padding: 10px 12px;
+  border-radius: 9px;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.14s ease, color 0.14s ease;
+}
+.accnav__item:hover {
+  background: var(--teal-soft);
+  color: var(--teal);
+}
+.accnav__item--all {
+  color: var(--teal);
+  font-weight: 700;
+  border-bottom: 1px solid var(--border, #e6eaf2);
+  border-radius: 9px 9px 0 0;
+  margin-bottom: 2px;
+}
+/* קיבוץ לפי נושא בתפריט האביזרים: כותרת-נושא לחיצה + הפריטים שלה */
+.accnav__group {
+  padding-top: 4px;
+}
+.accnav__group + .accnav__group {
+  border-top: 1px solid var(--border, #e6eaf2);
+  margin-top: 4px;
+}
+.accnav__grouphead {
+  display: block;
+  font-family: var(--font-rubik), sans-serif;
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--ink);
+  text-align: right;
+  text-decoration: none;
+  padding: 8px 12px 4px;
+  border-radius: 9px;
+  transition: color 0.14s ease;
+}
+.accnav__grouphead:hover {
+  color: var(--teal);
+}
+.accnav__group .accnav__item {
+  padding-inline-start: 22px;
+  font-weight: 500;
+}
+
+/* ===== סקשנים ===== */
+.section {
+  padding-block: 64px;
+}
+.section--soft {
+  /* אחידות מלאה עם «מספרים מכוונים» — נייר חם, ללא ירוק */
+  background: linear-gradient(180deg, var(--surface-soft), var(--bg));
+}
+.section__head {
+  margin-bottom: 30px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--gold-line);
+}
+.section__eyebrow {
+  /* Oak: תווית סקשן = הדגשת-מרקר צהובה (לא גלולת-מנטה) */
+  display: inline-block;
+  font-size: var(--step--1);
+  font-weight: 700;
+  color: var(--ink);
+  background: var(--gold);
+  padding: 3px 12px;
+  margin-bottom: 14px;
+}
+.section__title {
+  font-size: var(--step-3);
+  font-weight: 700;
+  line-height: 1.25;
+}
+.section__sub {
+  margin-top: 8px;
+  color: var(--text-soft);
+  font-size: var(--step-0);
+  max-width: 44rem;
+}
+
+/* תגי +1 / −1 — מוטיב חתימה מתוך חומרי היחידה */
+.signbadges {
+  display: inline-flex;
+  gap: 10px;
+  direction: ltr;
+  margin-bottom: 18px;
+}
+.signbadges--sm {
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.signbadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-rubik), sans-serif;
+  font-weight: 700;
+  font-size: var(--step-1);
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+}
+.signbadge--sm {
+  width: 30px;
+  height: 30px;
+  font-size: var(--step--1);
+  border-width: 1.5px;
+}
+.signbadge--pos {
+  /* Oak: עיגולי אייקון מנטה עם קו שחור (כמו Teaching resources / AI tools) */
+  color: var(--ink);
+  border: 2px solid var(--ink);
+  background: var(--teal-soft);
+}
+.signbadge--neg {
+  color: var(--ink);
+  border: 2px solid var(--ink);
+  background: var(--gold-soft);
+}
+
+/* צביעת מספרים בתרגילים: שלילי = אדום */
+.num-neg {
+  color: var(--red);
+  font-weight: 700;
+  unicode-bidi: isolate;
+}
+.num-pos {
+  color: var(--blue);
+  font-weight: 700;
+  unicode-bidi: isolate;
+}
+
+/* ===== כפתורים ===== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: var(--font-rubik), sans-serif;
+  font-size: var(--step-0);
+  font-weight: 600;
+  min-height: 44px;
+  padding: 12px 22px;
+  border-radius: var(--radius-btn);
+  border: 1px solid transparent;
+  cursor: pointer;
+  text-decoration: none;
+  line-height: 1.1;
+  transition: transform 0.12s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+.btn:active {
+  transform: translateY(1px);
+}
+.btn--primary {
+  /* כפתור ראשי כהה מלא עם חץ (מבנה Oak, בצבע נייבי --ink) */
+  background: var(--ink);
+  color: #fff;
+}
+.btn--primary::after {
+  /* חץ דקורטיבי בכיוון הקריאה (RTL) — מקבילה ל-"→" של Oak */
+  content: "←";
+  font-weight: 400;
+}
+.btn--primary:hover {
+  background: #0a1730;
+}
+.btn--gold {
+  background: var(--gold);
+  color: var(--ink);
+}
+.btn--gold:hover {
+  filter: brightness(1.04);
+}
+.btn--ghost {
+  /* Oak: כפתור משני לבן עם מסגרת שחורה דקה (כמו "My library") */
+  background: var(--surface);
+  color: var(--ink);
+  border: 1.5px solid var(--ink);
+}
+.btn--ghost:hover {
+  background: var(--teal-soft);
+}
+.btn--block {
+  width: 100%;
+}
+.btn--sm {
+  min-height: 44px;
+  padding: 10px 16px;
+  font-size: var(--step--1);
+}
+.btn--disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ===== כרטיסים ===== */
+.card {
+  /* Oak: כרטיס לבן עם מסגרת שחורה דקה (כמו תיבת בחירת המקצוע) */
+  background: var(--surface);
+  border: 2px solid var(--ink);
+  border-radius: var(--radius-sm);
+}
+
+/* ===== Hero ===== */
+.hero {
+  position: relative;
+  /* Oak: הירו = בלוק ירוק-מנטה מלא (rgb(190,242,189)), שטוח לגמרי */
+  background: var(--green-hero);
+  border-bottom: 2px solid var(--ink);
+  overflow: hidden;
+}
+/* התגים +1/−1 בשורה משלהם, מיושרים לימין כמו הכותרת — לא נצמדים ל-eyebrow. */
+.hero .signbadges {
+  display: flex;
+  justify-content: flex-end;
+}
+.hero__eyebrow {
+  /* Oak: תווית עם הדגשת-מרקר צהובה (כמו "Choose a curriculum") */
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--ink);
+  background: var(--gold);
+  padding: 3px 12px;
+  font-weight: 700;
+  font-size: var(--step--1);
+  margin-bottom: 10px;
+}
+.hero__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 44px;
+  align-items: center;
+  padding-block: 60px 64px;
+}
+.hero__title {
+  /* Oak: כותרת ראשית במשקל 600 (לא 800) — נוכחת אך רגועה */
+  font-size: var(--step-4);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: 0;
+  color: var(--ink);
+}
+.hero__desc {
+  margin-top: 18px;
+  font-size: var(--step-1);
+  color: var(--text);
+  max-width: 34rem;
+}
+.hero__actions {
+  margin-top: 28px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.hero__cover {
+  /* Oak: תמונת הירו במסגרת שחורה עבה */
+  position: relative;
+  border-radius: var(--radius-sm);
+  border: 3px solid var(--ink);
+  background: var(--surface);
+  overflow: hidden;
+  aspect-ratio: 16 / 10;
+}
+.hero__cover img {
+  object-fit: cover;
+}
+
+/* ===== מצגת ===== */
+.viewer {
+  position: relative;
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--gold-line);
+  background: var(--surface);
+  box-shadow: var(--shadow-md);
+  aspect-ratio: 16 / 9;
+}
+.viewer iframe,
+.viewer object,
+.viewer embed {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+}
+.viewer__bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+/* כרטיס פתיחת מצגת לנייד (PDF inline אינו עובד בנייד) */
+.viewer-mobile {
+  display: none;
+  position: relative;
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--gold-line);
+  box-shadow: var(--shadow-md);
+  text-decoration: none;
+}
+.viewer-mobile img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.viewer-mobile__poster {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 16 / 9;
+  background: var(--surface-soft);
+  color: var(--text);
+  font-family: var(--font-rubik), sans-serif;
+  font-weight: 700;
+  font-size: var(--step-2);
+}
+.viewer-mobile__cta {
+  position: absolute;
+  inset-inline: 0;
+  inset-block-end: 0;
+  background: rgba(17, 32, 60, 0.85);
+  color: #fff;
+  text-align: center;
+  padding: 12px;
+  font-family: var(--font-rubik), sans-serif;
+  font-weight: 600;
+  font-size: var(--step-0);
+}
+
+/* מסגרת מצגת/חוברת — מסגרת שחורה עבה בסגנון Oak (כמו תמונת ההירו שלהם) */
+.pdfframe {
+  border: 3px solid var(--ink);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  background: var(--ink);
+}
+/* צופה PDF.js פנימי — עמודים נגללים כמו ספר, אמין בכל דפדפן */
+.pdfviewer {
+  height: min(82vh, 900px);
+  min-height: 560px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: #eef1f6;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  scroll-behavior: smooth;
+}
+.pdfviewer__page {
+  width: min(860px, 100%);
+  margin: 0 auto;
+  background: #fff;
+  border-radius: 6px;
+  overflow: hidden;
+  flex: none;
+}
+.pdfviewer__page canvas {
+  display: block;
+}
+.pdfviewer__status {
+  padding: 48px 16px;
+  text-align: center;
+  font-family: var(--font-assistant), sans-serif;
+  font-weight: 600;
+  font-size: var(--step-0);
+  color: var(--text-soft, #54607a);
+  background: #eef1f6;
+}
+@media (max-width: 640px) {
+  .pdfviewer {
+    height: 74vh;
+    min-height: 440px;
+    padding: 10px;
+    gap: 10px;
+  }
+}
+
+.pdfframe__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px 12px;
+  padding: 11px 16px;
+  background: var(--ink);
+  color: #fff;
+}
+.pdfframe__title {
+  font-family: var(--font-rubik), sans-serif;
+  font-weight: 600;
+  font-size: var(--step-0);
+  color: #fff;
+}
+.pdfframe__acts {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+/* צ'יפ "דף מלווה" בסרגל העליון — זהב, כדי שלא יישב על השקופית/המסגרת */
+.pdfframe__acts .pdfframe__sheet {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--gold);
+  color: var(--ink);
+  border: 1px solid var(--gold);
+  font-weight: 700;
+}
+.pdfframe__acts .pdfframe__sheet:hover {
+  background: var(--gold);
+  filter: brightness(1.06);
+}
+.pdfframe__acts a,
+.pdfframe__acts button {
+  color: #fff;
+  text-decoration: none;
+  font-family: var(--font-rubik), sans-serif;
+  font-weight: 600;
+  font-size: var(--step--1);
+  padding: 7px 14px;
+  border-radius: var(--radius-btn);
+  border: 1px solid var(--border-on-dark);
+  background: var(--surface-on-dark);
+  transition: background 0.18s ease;
+  cursor: pointer;
+}
+.pdfframe__acts a:hover,
+.pdfframe__acts button:hover {
+  background: rgba(255, 255, 255, 0.16);
+}
+/* כרטיס-השער של תוכנית הלימודים (בתוך pdfframe) — כותרת גדולה, שנה, וכפתור צפייה */
+.curr-cover {
+  background: #fff;
+  padding: clamp(36px, 6vw, 72px) 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 14px;
+}
+.curr-cover__title {
+  margin: 10px 0 0;
+  font-family: var(--font-rubik), sans-serif;
+  font-weight: 800;
+  font-size: clamp(26px, 4.6vw, 42px);
+  line-height: 1.2;
+  color: var(--ink);
+}
+.curr-cover__year {
+  margin: 0 0 8px;
+  font-family: var(--font-assistant), sans-serif;
+  font-weight: 500;
+  font-size: var(--step-0);
+  color: var(--text-soft, #54607a);
+}
+.pdfframe__doc {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background: var(--ink);
+  overflow: hidden;
+}
+.pdfframe__doc object,
+.pdfframe__doc iframe,
+.pdfframe__doc embed {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  /* חותכים פס דק עליון וגם את סרגל הניווט האפור התחתון של מציג Office,
+     כך שהשקופית ממלאת את כל המסגרת הכחולה באופן אחיד (ללא אפור) */
+  top: -22px;
+  height: calc(100% + 74px);
+  border: 0;
+  display: block;
+}
+
+/* ===== מציג שקופיות מותאם אישית (ניווט קדימה/אחורה) ===== */
+.slideshow {
+  display: flex;
+  flex-direction: column;
+}
+.slideshow__stage {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background: var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.slideshow__img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  display: block;
+}
+/* כתוביות הווידאו (שקף 27) — עברית קריאה על רקע כהה, בגופן הפרויקט */
+video::cue {
+  background: rgba(9, 15, 28, 0.82);
+  color: #ffffff;
+  font-family: var(--font-assistant), system-ui, sans-serif;
+  line-height: 1.45;
+}
+.slideshow__sheet {
+  position: absolute;
+  top: 22px;
+  left: 22px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--gold);
+  color: var(--ink);
+  font-family: var(--font-rubik), sans-serif;
+  font-weight: 700;
+  font-size: var(--step--1);
+  text-decoration: none;
+  padding: 9px 16px;
+  border-radius: var(--radius-pill);
+  transition: filter 0.15s ease, transform 0.15s ease;
+}
+.slideshow__sheet:hover {
+  filter: brightness(1.06);
+  transform: translateY(-1px);
+}
+
+/* מצב "מסך מלא" בתוך האתר — ממלא את כל חלון הדפדפן, אמין בכל מכשיר */
+.pdfframe--max {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  margin: 0;
+  width: 100vw;
+  height: 100dvh;
+  max-width: none;
+  border: 0;
+  border-radius: 0;
+  display: flex;
+  flex-direction: column;
+}
+.pdfframe--max .slideshow {
+  flex: 1;
+  min-height: 0;
+}
+.pdfframe--max .slideshow__stage {
+  flex: 1;
+  aspect-ratio: auto;
+  min-height: 0;
+}
+.pdfframe--max .slideshow__bar {
+  flex: none;
+}
+.slidenav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  line-height: 1;
+  font-weight: 700;
+  cursor: pointer;
+  background: rgba(17, 32, 60, 0.55);
+  color: #fff;
+  border: 2px solid var(--gold);
+  transition: background 0.15s ease, color 0.15s ease, transform 0.15s ease;
+}
+.slidenav:hover:not(:disabled) {
+  background: var(--gold);
+  color: var(--ink);
+  transform: translateY(-50%) scale(1.06);
+}
+.slidenav:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+.slidenav--prev {
+  right: 14px;
+}
+.slidenav--next {
+  left: 14px;
+}
+.slideshow__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 11px 16px;
+  background: var(--ink);
+  border-top: 1px solid var(--border-on-dark);
+}
+.slidebtn {
+  font-family: var(--font-rubik), sans-serif;
+  font-weight: 700;
+  font-size: var(--step--1);
+  color: var(--ink);
+  background: var(--gold);
+  border: none;
+  border-radius: var(--radius-btn);
+  padding: 8px 20px;
+  cursor: pointer;
+  transition: filter 0.15s ease;
+}
+.slidebtn:hover:not(:disabled) {
+  filter: brightness(1.07);
+}
+.slidebtn:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+.slideshow__count {
+  color: #fff;
+  font-family: var(--font-rubik), sans-serif;
+  font-weight: 600;
+  font-size: var(--step--1);
+}
+
+/* ===== סרטון ===== */
+.video {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 3px solid var(--ink);
+  background: var(--surface);
+  padding: 6px;
+}
+.video iframe,
+.video video {
+  position: absolute;
+  inset: 6px;
+  width: calc(100% - 12px);
+  height: calc(100% - 12px);
+  border: 0;
+  border-radius: calc(var(--radius) - 8px);
+}
+/* וידאו נטיבי (MP4 מקומי) ממלא את המסגרת כמו ה-iframe, על רקע שחור */
+.video video {
+  object-fit: cover;
+  background: #000;
+  display: block;
+}
+/* תצוגה מקדימה נקייה ללחיצה (ללא שכבת הכותרת/שם של YouTube) */
+.video__facade {
+  display: block;
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+  background: var(--surface);
+}
+.video__thumb {
+  position: absolute;
+  inset: 6px;
+  width: calc(100% - 12px);
+  height: calc(100% - 12px);
+  object-fit: cover;
+  border-radius: calc(var(--radius) - 8px);
+  display: block;
+}
+.video__play {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.video__play svg {
+  filter: drop-shadow(0 3px 10px rgba(0, 0, 0, 0.35));
+  transition: transform 0.18s ease, opacity 0.18s ease;
+  opacity: 0.92;
+}
+.video__facade:hover .video__play svg {
+  transform: scale(1.08);
+  opacity: 1;
+}
+.video-credit {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: flex-start;
+  margin-top: 14px;
+  color: var(--text-soft);
+  font-size: var(--step--1);
+}
+.video-credit svg {
+  color: var(--red);
+  flex: none;
+}
+.video-credit b {
+  color: var(--text);
+  font-weight: 700;
+}
+
+/* ===== רשת דפים מלווים ===== */
+.grid-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+}
+.wcard {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: transform 0.18s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+}
+.wcard:hover,
+.qcard:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--gold-line);
+}
+.wcard:focus-within,
+.qcard:focus-within {
+  box-shadow: var(--shadow-md);
+  border-color: var(--blue);
+}
+.wcard__preview {
+  position: relative;
+  aspect-ratio: 1 / 1.414;
+  background: var(--surface-soft);
+  border-bottom: 1px solid var(--border);
+}
+.wcard__preview img {
+  object-fit: cover;
+}
+/* תצוגה מקדימה חיה — הדף האמיתי בהקטנה מדויקת (זהה 1:1 למה שמורידים) */
+.wcard__preview--live {
+  container-type: inline-size;
+  overflow: hidden;
+}
+.wcard__pv {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 860px;
+  transform-origin: top left;
+  pointer-events: none;
+}
+.wcard__pv .ws-sheet {
+  width: 860px;
+  border-radius: 0;
+  box-shadow: none;
+}
+.wcard__body {
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+}
+.wcard__title {
+  font-size: var(--step-1);
+  font-weight: 600;
+}
+.wcard__desc {
+  font-size: var(--step--1);
+  line-height: 1.35;
+  color: var(--text-soft);
+  flex: 1;
+}
+.wcard__actions {
+  display: grid;
+  gap: 8px;
+  /* הצמדה לתחתית כדי שהכפתורים יתיישרו בכל הכרטיסים גם כשהכותרת באורך שונה. */
+  margin-top: auto;
+}
+.wcard__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+/* ===== הסברים ===== */
+.grid-explain {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+}
+.explain {
+  padding: 22px;
+  border-inline-start: 4px solid var(--gold);
+  transition: box-shadow 0.22s ease;
+}
+.explain:hover {
+  box-shadow: var(--shadow-md);
+}
+.explain__title {
+  font-size: var(--step-1);
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: var(--text);
+}
+.explain__text {
+  color: var(--text-soft);
+  max-width: 46rem;
+  unicode-bidi: plaintext;
+}
+
+/* ===== שאלות לדוגמה ===== */
+.grid-q {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+.qcard {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-color: var(--gold-line);
+  border-top: 3px solid var(--gold);
+  transition: transform 0.18s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+}
+.qcard__top {
+  padding: 22px 22px 18px;
+  background: var(--surface-soft);
+  border-bottom: 1px solid var(--gold-line);
+  flex: 1;
+}
+.qcard__badge {
+  display: inline-block;
+  font-size: var(--step--1);
+  font-weight: 700;
+  color: var(--teal);
+  background: var(--teal-soft);
+  border: 1px solid var(--teal-line);
+  padding: 2px 10px;
+  border-radius: var(--radius-pill);
+  margin-bottom: 12px;
+}
+.qcard__title {
+  font-size: var(--step--1);
+  line-height: 1.35;
+  color: var(--text-soft);
+  margin-bottom: 8px;
+}
+.qcard__expr {
+  font-family: var(--font-rubik), sans-serif;
+  font-size: var(--step-2);
+  font-weight: 600;
+  direction: ltr;
+  unicode-bidi: isolate;
+  text-align: center;
+  color: var(--text);
+  padding: 10px 0;
+  line-height: 1.3;
+  letter-spacing: 0;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  font-feature-settings: "tnum" 1;
+}
+.qcard__actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  padding: 14px;
+}
+
+/* ===== משרד החינוך / תוכנית הלימודים ===== */
+.curr-images {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin-bottom: 34px;
+}
+.curr-img {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  border: 1px solid var(--gold-line);
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.18s ease, box-shadow 0.22s ease;
+}
+.curr-img:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+.curr-img img {
+  object-fit: contain;
+  background: #fff;
+}
+.budget {
+  padding: 30px;
+}
+.budget p,
+.budget__def,
+.budget__q span,
+.teacher p,
+.teacher li {
+  unicode-bidi: plaintext;
+}
+.budget__title {
+  font-size: var(--step-2);
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 14px;
+}
+.budget__subhead {
+  font-size: var(--step-1);
+  font-weight: 600;
+  color: var(--text);
+  margin: 18px 0 6px;
+}
+.budget p {
+  max-width: 46rem;
+}
+.budget__defs {
+  display: grid;
+  gap: 10px;
+  margin: 16px 0;
+}
+.budget__def {
+  background: var(--surface-soft);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 12px 16px;
+  max-width: 46rem;
+}
+.budget__def b {
+  color: var(--text);
+}
+.budget__note {
+  background: var(--cream);
+  border: 1px solid var(--cream-line);
+  border-radius: var(--radius-sm);
+  padding: 12px 16px;
+  color: var(--text);
+  margin: 16px 0;
+}
+.budget__q {
+  display: flex;
+  gap: 12px;
+  padding: 12px 0;
+  border-top: 1px solid var(--border);
+}
+.budget__q-label {
+  font-weight: 700;
+  color: var(--blue);
+  flex: 0 0 auto;
+}
+.budget__q span:last-child {
+  max-width: 46rem;
+}
+.teacher {
+  margin-top: 22px;
+  padding: 24px 30px;
+  border-inline-start: 4px solid var(--blue);
+  background: var(--blue-soft);
+}
+.teacher h3 {
+  font-size: var(--step-2);
+  color: var(--blue-strong);
+  margin-bottom: 10px;
+}
+.teacher__lead {
+  margin-bottom: 0;
+  font-weight: 600;
+}
+.teacher p,
+.teacher li {
+  max-width: 46rem;
+}
+.teacher ul {
+  margin: 8px 0 0;
+  padding-inline-start: 20px;
+}
+.teacher li {
+  margin-bottom: 8px;
+}
+
+/* ===== הודעת קובץ חסר ===== */
+.missing {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 100%;
+  min-height: 140px;
+  padding: 20px;
+  text-align: center;
+  color: var(--text-soft);
+  background: var(--cream);
+  border: 1.5px solid var(--cream-line);
+}
+.missing__icon {
+  font-size: var(--step-2);
+  opacity: 0.6;
+}
+
+/* ===== מצבי טעינה/שגיאה ===== */
+.center-state {
+  min-height: 70vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  text-align: center;
+  padding: 24px;
+}
+.loader__pulse {
+  animation: loader-pulse 1.1s ease-in-out infinite;
+}
+@keyframes loader-pulse {
+  0%,
+  100% {
+    opacity: 0.5;
+    transform: scale(0.96);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ===== הודעת toast ===== */
+.toast {
+  position: fixed;
+  inset-block-end: 24px;
+  left: 50%;
+  right: auto;
+  transform: translateX(-50%);
+  max-width: calc(100vw - 32px);
+  text-align: center;
+  background: var(--ink);
+  color: #fff;
+  padding: 12px 22px;
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-lg);
+  font-weight: 600;
+  font-size: var(--step-0);
+  z-index: 60;
+  animation: toast-in 0.18s ease;
+}
+.toast--error {
+  background: var(--red-strong);
+}
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(8px);
+  }
+}
+
+/* ===== Footer ===== */
+.footer {
+  background: var(--ink);
+  color: var(--on-dark-soft);
+  border-top: 2px solid var(--gold);
+  padding-block: 28px;
+  margin-top: 40px;
+}
+.footer__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: var(--step--1);
+  line-height: 1.35;
+}
+.footer__brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.footer__logo {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  flex: none;
+  object-fit: cover;
+  background: #fff;
+  border: 2.5px solid var(--gold);
+}
+
+/* ===== רספונסיביות ===== */
+@media (max-width: 980px) {
+  .hero__grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+  .grid-cards,
+  .grid-q {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .curr-images {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 640px) {
+  .section {
+    padding-block: 44px;
+  }
+  .grid-cards,
+  .grid-q,
+  .grid-explain,
+  .curr-images {
+    grid-template-columns: 1fr;
+  }
+  .hero__actions .btn {
+    flex: 1 1 auto;
+  }
+  /* במובייל: הלוגו מעל בלוק הטקסט, בגודל קבוע וממורכז */
+  .topbar__inner {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    row-gap: 12px;
+    text-align: center;
+  }
+  .topbar__logobox {
+    grid-column: auto;
+    align-self: center;
+    justify-self: center;
+    width: 100px;
+    height: 100px;
+  }
+  .topbar__text {
+    grid-column: auto;
+  }
+  .wcard__row {
+    grid-template-columns: 1fr;
+  }
+  .viewer__bar {
+    flex-direction: column;
+  }
+  .viewer__bar .btn {
+    width: 100%;
+  }
+  .viewer {
+    aspect-ratio: 3 / 4;
+  }
+  .viewer--has-mobile {
+    display: none;
+  }
+  .viewer-mobile {
+    display: block;
+  }
+}
+
+/* fade-in אחיד בכל מעבר בין עמודים (תואם למשך מעברי ה-fade הפנימיים). */
+.page-fade {
+  animation: pageFadeIn 340ms ease both;
+}
+@keyframes pageFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* ===== העדפת תנועה מופחתת ===== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  .btn:active {
+    transform: none;
+  }
+  .toast {
+    animation: none;
+  }
+  .loader__pulse {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ===== עמוד "מתוך תוכנית הלימודים" ===== */
+.pagebar {
+  background: var(--surface);
+  border-bottom: 1px solid var(--gold-line);
+}
+.pagebar__inner {
+  padding-block: 12px;
+}
+.backlink {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-rubik), sans-serif;
+  font-weight: 600;
+  font-size: var(--step--1);
+  color: var(--blue);
+  text-decoration: none;
+}
+.backlink:hover {
+  color: var(--blue-strong);
+}
+
+.cphero {
+  position: relative;
+  /* Oak: בלוק-צבע שטוח, בלי גרדיאנטים/כתמים */
+  background: var(--teal-soft);
+  border-bottom: 1px solid var(--border);
+  padding-block: 46px 40px;
+}
+.cphero__title {
+  font-size: var(--step-4);
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+.cphero__topic {
+  margin-top: 10px;
+  font-family: var(--font-rubik), sans-serif;
+  font-weight: 600;
+  font-size: var(--step-2);
+  color: var(--blue-strong);
+}
+.cphero__intro {
+  margin-top: 8px;
+  color: var(--text-soft);
+  max-width: 46rem;
+}
+
+/* הערות דידקטיות */
+.pnotes {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+.pnote {
+  padding: 20px;
+  border-inline-start: 4px solid var(--teal);
+}
+.pnote__title {
+  font-size: var(--step-1);
+  font-weight: 600;
+  color: var(--teal);
+  margin-bottom: 6px;
+}
+.pnote__body {
+  color: var(--text-soft);
+}
+
+/* יישומים ודוגמאות */
+.exlist {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+}
+.exgroup {
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  border-color: var(--gold-line);
+  border-top: 3px solid var(--gold);
+}
+.exgroup__head {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+.exnum {
+  flex: 0 0 auto;
+  width: 34px;
+  height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--blue-soft);
+  color: var(--blue-strong);
+  border: 2px solid var(--blue);
+  font-family: var(--font-rubik), sans-serif;
+  font-weight: 700;
+}
+.ex-instruction {
+  margin: 4px 0 0;
+}
+.exparts {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 10px;
+}
+.exparts li {
+  unicode-bidi: plaintext;
+}
+.exitems {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.exchip {
+  direction: ltr;
+  unicode-bidi: isolate;
+  font-family: var(--font-rubik), sans-serif;
+  font-weight: 600;
+  font-size: var(--step-1);
+  background: var(--surface-soft);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 8px 14px;
+}
+.numline-wrap {
+  background: var(--surface-soft);
+  border: 1px solid var(--gold-line);
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+}
+
+/* ===== עמוד תוכנית הלימודים — שלוש העמודות ===== */
+.curric-cols {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+.curric-col {
+  padding: 22px;
+  border-top: 3px solid var(--teal);
+  display: flex;
+  flex-direction: column;
+}
+.curric-col__tag {
+  align-self: flex-start;
+  font-family: var(--font-rubik), sans-serif;
+  font-weight: 700;
+  font-size: var(--step--1);
+  color: var(--teal);
+  background: var(--teal-soft);
+  border: 1px solid var(--teal-line);
+  padding: 3px 12px;
+  border-radius: var(--radius-pill);
+  margin-bottom: 10px;
+}
+.curric-col__title {
+  font-size: var(--step-1);
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 12px;
+  line-height: 1.25;
+}
+.curric-col__more {
+  margin-top: auto;
+  padding-top: 12px;
+  color: var(--teal);
+  font-size: var(--step--1);
+  font-weight: 600;
+}
+
+/* תיבת מידע (קיצורי רישום, כפל וחילוק) */
+.infobox {
+  background: var(--cream);
+  border: 1px solid var(--cream-line);
+  border-radius: var(--radius-sm);
+  padding: 18px 20px;
+  margin-top: 18px;
+}
+.infobox__lead {
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 10px;
+}
+.teacher__ol {
+  margin: 8px 0 0;
+  padding-inline-start: 22px;
+}
+.teacher__ol li {
+  margin-bottom: 8px;
+  max-width: 46rem;
+  unicode-bidi: plaintext;
+}
+
+/* תרגילים — תוויות חלקים, הערות וכותרות משנה */
+.exlabel {
+  color: var(--blue-strong);
+  font-weight: 700;
+  margin-inline-end: 4px;
+}
+.ex-note {
+  color: var(--text-soft);
+  font-size: var(--step--1);
+  background: var(--surface-soft);
+  border-inline-start: 3px solid var(--teal);
+  border-radius: var(--radius-sm);
+  padding: 8px 12px;
+  unicode-bidi: plaintext;
+}
+.curric-subhead {
+  font-family: var(--font-rubik), sans-serif;
+  font-size: var(--step-1);
+  font-weight: 700;
+  color: var(--blue-strong);
+  margin: 28px 0 14px;
+  padding-inline-start: 12px;
+  border-inline-start: 4px solid var(--gold);
+}
+.kin--numbered {
+  margin-top: 18px;
+}
+.kin--numbered .kin__fig {
+  position: relative;
+}
+.kin__num {
+  position: absolute;
+  top: 8px;
+  inset-inline-start: 8px;
+  z-index: 2;
+}
+
+/* כותרות נושא (במקום "עמודה 1/2/3") */
+.topic__title {
+  font-family: var(--font-rubik), sans-serif;
+  font-size: var(--step-3);
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.15;
+  padding-bottom: 12px;
+  margin-bottom: 6px;
+  border-bottom: 2px solid var(--gold-line);
+}
+
+/* כפתור העתקה לשאלות לדוגמה */
+.exgroup__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.copybtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-rubik), sans-serif;
+  font-weight: 600;
+  font-size: var(--step--1);
+  color: var(--blue-strong);
+  background: var(--blue-soft);
+  border: 1px solid var(--blue);
+  border-radius: var(--radius-btn);
+  padding: 5px 13px;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+.copybtn:hover {
+  background: var(--blue);
+  color: #fff;
+}
+.copybtn svg {
+  display: block;
+}
+.copybtn--done,
+.copybtn--done:hover {
+  background: var(--teal-soft);
+  border-color: var(--teal-line);
+  color: var(--teal);
+}
+.kin__bar {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+}
+.kin__bar .kin__intro {
+  margin: 0;
+}
+
+/* ציר מספרים (SVG) */
+.numline {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.numline .nl-axis {
+  stroke: var(--gold);
+}
+.numline .nl-arrow {
+  fill: var(--gold);
+  stroke: none;
+}
+.numline .nl-label {
+  font-family: var(--font-rubik), sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+}
+.numline .nl-neg {
+  fill: var(--red);
+}
+.numline .nl-pos {
+  fill: var(--blue);
+}
+.numline .nl-zero {
+  fill: var(--text-soft);
+}
+
+/* בעיית הכנרת */
+.kin {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 26px;
+  padding: 26px;
+  align-items: center;
+}
+.kin__fig {
+  background: var(--surface-soft);
+  border: 1px solid var(--gold-line);
+  border-radius: var(--radius-sm);
+  padding: 12px;
+}
+.kin-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.kin-svg .kin-wall {
+  fill: none;
+  stroke: var(--text-soft);
+  stroke-width: 2;
+}
+.kin-svg .kin-red {
+  stroke: var(--red);
+}
+.kin-svg .kin-blue {
+  stroke: var(--blue);
+}
+.kin-figure {
+  margin: 0;
+}
+.kin-legend {
+  list-style: none;
+  margin: 14px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 9px;
+}
+.kin-legend li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: var(--step--1);
+}
+.kin-key {
+  flex: 0 0 auto;
+  width: 24px;
+  height: 0;
+  border-top: 3px solid var(--text-soft);
+  border-radius: 2px;
+}
+.kin-key--red {
+  border-top: 3px dashed var(--red);
+}
+.kin-key--blue {
+  border-top: 3px solid var(--blue);
+}
+.kin-key__label {
+  color: var(--text-soft);
+}
+.kin-key__val {
+  margin-inline-start: auto;
+  font-family: var(--font-rubik), sans-serif;
+  font-weight: 700;
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+.kin__intro {
+  margin-top: 0;
+  color: var(--text-soft);
+  unicode-bidi: plaintext;
+}
+.kin__q {
+  margin: 14px 0 0;
+  padding-inline-start: 22px;
+  display: grid;
+  gap: 10px;
+}
+.kin__q li {
+  padding-inline-start: 6px;
+  unicode-bidi: plaintext;
+}
+
+/* כרטיס CTA בעמוד הבית */
+.cta {
+  padding: 40px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  border-color: var(--gold-line);
+  border-top: 3px solid var(--gold);
+}
+.cta__text {
+  color: var(--text-soft);
+  max-width: 46rem;
+  margin: 8px 0 18px;
+}
+
+@media (max-width: 980px) {
+  .pnotes,
+  .curric-cols {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .kin {
+    grid-template-columns: 1fr;
+  }
+  .kin__fig {
+    max-width: 360px;
+    margin-inline: auto;
+  }
+}
+@media (max-width: 640px) {
+  .pnotes,
+  .exlist,
+  .curric-cols {
+    grid-template-columns: 1fr;
+  }
+  .cta {
+    padding: 28px 20px;
+  }
+}
+
+/* ===== תצוגה מקדימה מהירה של דף עבודה בתוך האתר (מודאל) ===== */
+.pdfmodal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(12px, 3vw, 32px);
+  background: rgba(17, 32, 60, 0.55);
+  backdrop-filter: blur(3px);
+  animation: pdfmodalIn 0.18s ease;
+}
+@keyframes pdfmodalIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.pdfmodal__panel {
+  display: flex;
+  flex-direction: column;
+  width: min(860px, 100%);
+  height: min(94dvh, 100%);
+  background: #fff;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1.5px solid var(--border);
+}
+.pdfmodal__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 16px;
+  background: var(--ink);
+  color: #fff;
+}
+.pdfmodal__title {
+  font-family: var(--font-rubik), sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+}
+.pdfmodal__acts {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.pdfmodal__acts .btn--ghost {
+  background: transparent;
+  border-color: var(--border-on-dark);
+  color: #fff;
+}
+.pdfmodal__acts .btn--ghost:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+.pdfmodal__close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--border-on-dark);
+  border-radius: 10px;
+  background: transparent;
+  color: #fff;
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+.pdfmodal__close:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+.pdfmodal__body {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: #eef1f6;
+}
+.pdfmodal__page {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: 6px;
+  background: #fff;
+}
+.pdfmodal__frame {
+  flex: 1;
+  align-self: stretch;
+  width: 100%;
+  border: 0;
+  background: #eef1f6;
+}
+
+/* ============================================================
+   דפי עבודה — מצב קריאה + גיליון אחיד בשפת המצגת
+   ============================================================ */
+.ws-page {
+  min-height: 100dvh;
+  background: #eef1f6;
+  padding: 0 16px 40px;
+}
+.ws-page__sheets {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+  padding-top: 24px;
+}
+
+/* סרגל קריאה עליון — בסגנון סרגל המצגת */
+.wsbar {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 0 -16px;
+  padding: 10px 18px;
+  background: var(--navy, #16233f);
+  color: #fff;
+}
+.wsbar__title {
+  font-family: var(--font-rubik), sans-serif;
+  font-weight: 700;
+  font-size: var(--step-0);
+  color: #fff;
+  text-align: center;
+  flex: 1;
+}
+.wsbar__side {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.wsbar__nav {
+  display: flex;
+  gap: 6px;
+}
+
+/* הגיליון — כרטיס A4 בשפת האתר (עיצוב Oak: פסטל שטוח, בלי זהב) */
+.ws-sheet {
+  --wsink: #11203c;
+  --wssoft: #54607a;
+  --wsteal: #2c6e6b;
+  --wsgold: #c2a24e;
+  --wsgoldline: #e3d3a4;
+  --wsblue: #2d6cb3;
+  --wsred: #c0433b;
+  --wsbeige: #fbf8f1;
+  --wsbeigeline: #ece0cb;
+  --wsgreen: #e4efee;
+  --wsgreenline: #bcd8d5;
+  --wsborder: #e6eaf2;
+  width: min(860px, 100%);
+  /* פרופורציית A4 מדויקת (210×297) גם בצפייה — כל דף הוא "עמוד" אמיתי */
+  aspect-ratio: 210 / 297;
+  overflow: hidden;
+  background: #fff;
+  border: 2px solid var(--wsgoldline);
+  border-radius: 18px;
+  padding: 26px 44px 24px;
+  display: flex;
+  flex-direction: column;
+  color: var(--wsink);
+}
+/* גרסת שחור-לבן — נראות חזקה בהדפסה: כל המספרים שחורים, הכיתובים כהים וברורים.
+   ‎.ws-bw הוא עוטף-עמוד (קורא דפי העבודה, ?bw=1) שמחיל את אותה החלפת משתנים
+   על כל גיליון בתוכו — בלי לגעת ברכיבי הדפים עצמם. */
+.ws--bw,
+.ws-bw .ws-sheet {
+  --wsink: #000000;
+  --wssoft: #2b2f33;
+  --wsteal: #1c1f22;
+  --wsgold: #5f5f5f;
+  --wsgoldline: #ababab;
+  --wsblue: #000000;
+  --wsred: #1a1a1a;
+  --wsbeige: #f3f3f2;
+  --wsbeigeline: #c9c9c9;
+  --wsgreen: #ebebea;
+  --wsgreenline: #bfbfbf;
+  --wsborder: #c9c9c9;
+}
+.ws--bw .ws-logo,
+.ws-bw .ws-logo {
+  filter: grayscale(1);
+}
+/* האיורים הצבעוניים של "זוויות סביבנו" — בגרסת ההדפסה בשחור-לבן */
+.ws--bw .ws-aru-grid svg,
+.ws-bw .ws-aru-grid svg {
+  filter: grayscale(1) contrast(1.08);
+}
+/* עמודי תמונה (webp מהחוברת המקורית) בשחור-לבן — ניגודיות מוגברת לקווים ברורים */
+.ws-bw .ws-imgpage img {
+  filter: grayscale(1) contrast(1.12);
+}
+
+/* ============================================================
+   קורא דף-עבודה לפי מספור רץ (/worksheets/w/[k]) + עמוד הרשימה (/worksheets)
+   ============================================================ */
+/* מסגרת הדף בקורא — עוגן לתג "דף עבודה N" */
+.ws-wsframe {
+  position: relative;
+  width: min(860px, 100%);
+}
+.ws-wsframe > .ws-sheet,
+.ws-wsframe > .ws-imgpage {
+  width: 100%;
+}
+/* עמוד-תמונה מהחוברת המקורית — כרטיס A4 מדויק, ובהדפסה עמוד שלם */
+.ws-imgpage {
+  aspect-ratio: 210 / 297;
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(15, 23, 42, 0.14);
+}
+/* תג המספר — פינה שמאלית-תחתונה, קטן ועדין, אינו מסתיר תוכן; מודפס גם ב-PDF */
+.ws-wsnum {
+  position: absolute;
+  bottom: 8px;
+  left: 12px;
+  z-index: 3;
+  font-family: var(--font-rubik), sans-serif;
+  font-weight: 600;
+  font-size: 11.5px;
+  line-height: 1;
+  color: #54607a;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid #e6eaf2;
+  border-radius: 999px;
+  padding: 4px 10px;
+  pointer-events: none;
+}
+.ws-bw .ws-wsnum {
+  color: #222;
+  border-color: #c9c9c9;
+}
+
+/* עמוד הרשימה — כרטיסי דפי עבודה בשפת הכרטיסים של מספרים מכוונים */
+.wslist__lead {
+  max-width: 62rem;
+  margin: 0 0 26px;
+  line-height: 1.75;
+  color: var(--text-soft);
+}
+.wslist {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 16px;
+}
+.wscard {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border: 1px solid var(--border, #e6eaf2);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+}
+.wscard:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lg, 0 14px 34px rgba(15, 23, 42, 0.12));
+  border-color: var(--gold-line);
+}
+.wscard__open {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  text-decoration: none;
+  color: inherit;
+}
+.wscard__open:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: -3px;
+  border-radius: 16px;
+}
+.wscard__thumb {
+  flex: none;
+  width: 72px;
+  aspect-ratio: 210 / 297;
+  border-radius: 8px;
+  border: 1px solid var(--border, #e6eaf2);
+  background: #fff;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.wscard__thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.wscard__thumb svg {
+  width: 66%;
+  height: auto;
+}
+.wscard__text {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.wscard__num {
+  font-family: var(--font-rubik), sans-serif;
+  font-weight: 800;
+  font-size: var(--step-0);
+  color: var(--ink);
+}
+.wscard__title {
+  font-size: var(--step--1);
+  line-height: 1.5;
+  color: var(--text-soft);
+}
+.wscard__acts {
+  display: flex;
+  gap: 8px;
+  padding: 0 16px 14px;
+}
+@media (max-width: 640px) {
+  .wslist {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* כותרת עליונה אחידה */
+.ws-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 18px;
+}
+.ws-logo {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid var(--wsgoldline);
+  flex: none;
+}
+/* מספר העמוד — עיגול עדין משמאל, בגודל הלוגו, אחיד בכל הדפים */
+.ws-pagenum {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: 1.5px solid var(--wsgoldline);
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-rubik), sans-serif;
+  font-weight: 700;
+  font-size: 26px;
+  color: var(--wsteal);
+  flex: none;
+}
+.ws-head__titles {
+  flex: 1;
+  text-align: center;
+  align-self: center;
+}
+.ws-title {
+  margin: 6px 0 0;
+  font-family: var(--font-rubik), sans-serif;
+  font-weight: 800;
+  font-size: clamp(22px, 3.4vw, 30px);
+  color: var(--wsink);
+  line-height: 1.25;
+}
+.ws-subtitle {
+  margin: 8px 0 0;
+  font-family: var(--font-assistant), sans-serif;
+  font-weight: 500;
+  font-size: var(--step-0);
+  color: var(--wssoft);
+}
+/* מבנה כותרת ממורכזת אחיד לכל עמודי הקריאה של החוברת — מקום אחד לכל הדפים */
+.ws-head--center {
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 6px;
+}
+.ws-head--center .ws-title,
+.ws-head--center .ws-subtitle {
+  margin: 0;
+}
+/* קו-ראש אחיד: דק, עדין ולכל רוחב אזור התוכן — תאום מדויק של ws-footline שבפוטר */
+.ws-headline {
+  height: 2px;
+  width: 100%;
+  border-radius: 999px;
+  background: var(--wsgold);
+  margin-top: 4px;
+}
+/* כותרת שער (קבוצת נושא) ברשימות ובתוכן העניינים — תווית + קו ממשיך עדין */
+.ws-tocgroup {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-rubik), sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--wssoft);
+  white-space: nowrap;
+}
+.ws-tocgroup::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--wsgoldline);
+}
+
+/* גוף הדף */
+.ws-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.ws-instr {
+  margin: 0;
+  font-family: var(--font-assistant), sans-serif;
+  font-weight: 600;
+  font-size: var(--step-0);
+  color: var(--wsink);
+}
+.ws-note {
+  margin: 0;
+  font-family: var(--font-assistant), sans-serif;
+  font-weight: 500;
+  font-size: var(--step--1);
+  color: var(--wssoft);
+}
+
+/* תיבות תוכן בשפת המצגת */
+.ws-box {
+  border-radius: 14px;
+  padding: 16px 20px;
+  border: 1.5px solid var(--wsborder);
+  background: #fff;
+}
+.ws-box--beige {
+  background: var(--wsbeige);
+  border-color: var(--wsbeigeline);
+}
+.ws-box--green {
+  background: var(--wsgreen);
+  border-color: var(--wsgreenline);
+}
+
+/* תרגילים — משקל רגיל כמו בספר לימוד (לא מודגש) */
+.ws-math {
+  direction: ltr;
+  unicode-bidi: isolate;
+  font-family: var(--font-rubik), sans-serif;
+  font-weight: 500;
+  font-size: 20px;
+  color: var(--wsink);
+}
+.ws-math--lg {
+  font-size: 24px;
+}
+.ws-num--pos {
+  color: var(--wsblue);
+}
+.ws-num--neg {
+  color: var(--wsred);
+}
+
+/* רשת תרגילים + קו תשובה */
+.ws-exgrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 14px 22px;
+}
+.ws-exercise {
+  /* תרגיל נכתב משמאל לימין: האות משמאל → התרגיל → סימן השווה → תיבת התשובה */
+  direction: ltr;
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding: 10px 14px;
+  border: 1.5px solid var(--wsborder);
+  border-radius: 12px;
+  background: #fff;
+}
+.ws-blank {
+  flex: 1;
+  min-width: 56px;
+  border-bottom: 1.5px solid var(--wssoft);
+  height: 1.2em;
+}
+
+/* פריט להקפה/סימון (דף 2) — בלי תיבת פתרון */
+.ws-circleitem {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 18px;
+  border: 1.5px dashed var(--wsgreenline);
+  border-radius: 999px;
+  background: #fff;
+}
+
+/* פוטר אחיד: קרדיט + קו יוקרתי עדין לכל הרוחב */
+.ws-foot {
+  margin-top: 26px;
+}
+.ws-credit {
+  margin: 0 0 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  text-align: center;
+}
+.ws-credit strong {
+  font-family: var(--font-rubik), sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--wsink);
+}
+.ws-credit span {
+  font-family: var(--font-assistant), sans-serif;
+  font-weight: 500;
+  font-size: 13px;
+  color: var(--wssoft);
+}
+.ws-footline {
+  height: 2px;
+  width: 100%;
+  border-radius: 999px;
+  /* Oak: קו שטוח אחיד, בלי גרדיאנט */
+  background: var(--wsgold);
+}
+
+/* שתי עמודות תרגילים — מתקדמות משמאל לימין (הקבוצה הראשונה בעמודה השמאלית, כמו במקור) */
+.ws-cols {
+  direction: ltr;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px 26px;
+  align-items: start;
+}
+.ws-col {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+/* פריסה מאווררת — ניצול מלא של שטח A4 בדפים עם פחות שורות */
+.ws-cols--airy .ws-col {
+  gap: 16px;
+}
+.ws-cols--airy .ws-exercise {
+  padding-block: 14px;
+}
+.ws-exletter {
+  direction: rtl;
+  unicode-bidi: isolate;
+  font-family: var(--font-rubik), sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--wsteal);
+  flex: none;
+}
+.ws-eq-sign {
+  font-family: var(--font-rubik), sans-serif;
+  font-weight: 500;
+  font-size: 20px;
+  color: var(--wsink);
+}
+.ws-ansbox {
+  display: inline-block;
+  width: 46px;
+  height: 30px;
+  border: 1.5px solid var(--wsgoldline);
+  border-radius: 8px;
+  background: var(--wsbeige);
+  flex: none;
+}
+.ws-ansbox--inline {
+  width: 40px;
+  height: 28px;
+  vertical-align: middle;
+}
+/* מקום קטן לכתיבת סימן התוצאה במילים (דף 2): "סימן התוצאה:" + קו כתיבה קצר */
+.ws-signask {
+  /* margin-left:auto דוחף את בלוק "סימן התוצאה:" לקצה הימני של השורה (השורה ltr), כך שבכל
+     הסעיפים התווית והקו מיושרים לימין ואנכית זה מתחת לזה — בלי תלות ברוחב התרגיל. רוחב הבלוק
+     זהה בכל השורות (אותה תווית + קו 62px) → יישור וסימטריה מדויקים. */
+  margin-left: auto;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  direction: rtl;
+  unicode-bidi: isolate;
+  flex: none;
+}
+.ws-signlabel {
+  font-family: var(--font-assistant), sans-serif;
+  font-weight: 500;
+  font-size: 13px;
+  color: var(--wssoft);
+}
+.ws-signline {
+  display: inline-block;
+  width: 62px;
+  border-bottom: 1.5px solid var(--wsgoldline);
+  height: 1em;
+}
+.ws-exercise--roomy {
+  padding-block: 13px;
+}
+.ws-cols--roomy2 .ws-col {
+  gap: 12px;
+}
+/* משוואת השלמה (דף 5) — LTR מלא, הסימן לפני הספרה */
+.ws-eq {
+  direction: ltr;
+  unicode-bidi: isolate;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-rubik), sans-serif;
+  font-weight: 500;
+  font-size: 20px;
+  color: var(--wsink);
+}
+
+/* דף 1 — היגדים + ציר */
+.ws-ws1 {
+  display: flex;
+  gap: 24px;
+  align-items: stretch;
+}
+.ws-ws1__items {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 17px;
+}
+.ws-statement {
+  margin: 0;
+  font-family: var(--font-assistant), sans-serif;
+  font-weight: 500;
+  font-size: 17px;
+  color: var(--wsink);
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+.ws-ws1__answers {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.ws-writeline {
+  flex: 0 1 190px;
+  border-bottom: 1.5px solid var(--wsgoldline);
+  height: 1.1em;
+}
+.ws-numline {
+  width: 108px;
+  flex: none;
+}
+.ws-numline__axis {
+  /* הציר שחור אמיתי (לא דיו כחול-כהה) — לבקשת יניב */
+  color: #111111;
+}
+.ws-numline__axis line {
+  stroke: currentColor;
+}
+.ws-numline text {
+  font-family: var(--font-rubik), sans-serif;
+  font-weight: 500;
+  font-size: 17px;
+}
+.ws-numline__pos {
+  fill: var(--wsblue);
+}
+.ws-numline__neg {
+  fill: var(--wsred);
+}
+.ws-numline__zero {
+  fill: var(--wsink);
+  font-weight: 700;
+}
+
+/* דף 6 — דוגמה פתורה: שורת התרגיל משמאל לימין; שורת הפתרון עברית (RTL) עם מתמטיקה מבודדת */
+.ws-example {
+  margin: 0 0 6px;
+  font-family: var(--font-assistant), sans-serif;
+  font-weight: 500;
+  font-size: 17px;
+  color: var(--wsink);
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  flex-wrap: wrap;
+  direction: ltr;
+  justify-content: flex-start;
+}
+.ws-example--solution {
+  direction: rtl;
+}
+.ws-example--solution {
+  font-size: 15px;
+  color: var(--wssoft);
+}
+/* פתרון הדוגמה — שורה מתחת לשורה (לא במאוזן), קומפקטי כדי לא להגדיל את משבצת הדוגמה */
+.ws-solstack {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  direction: rtl;
+  margin-top: 10px;
+}
+.ws-solstack > span {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  font-family: var(--font-assistant), sans-serif;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 1.25;
+  color: var(--wssoft);
+}
+
+/* אריחי פעולה לדפי העבודה (הבחירה של יניב: גרסה 5) — אייקון מעל תווית, רגוע ואחיד */
+.wtiles {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+.wtile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 12px 6px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: #fff;
+  color: var(--text-soft, #54607a);
+  font-family: var(--font-rubik), sans-serif;
+  font-weight: 500;
+  font-size: 13px;
+  text-decoration: none;
+  text-align: center;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, border-color 0.12s ease;
+}
+.wtile:hover {
+  border-color: var(--text);
+}
+.wtile__icon {
+  width: 20px;
+  height: 20px;
+}
+.wtile--view {
+  border-color: var(--border);
+  color: var(--text-soft);
+}
+.wtile--print {
+  background: var(--teal-soft);
+  border-color: var(--teal-line);
+  color: var(--teal);
+  font-weight: 600;
+}
+.wtile--bw {
+  background: var(--surface-soft);
+  border-color: var(--border);
+  color: var(--ink);
+}
+
+
+@media (max-width: 640px) {
+  .ws-cols {
+    grid-template-columns: 1fr;
+  }
+  .ws-ws1 {
+    gap: 12px;
+  }
+}
+
+/* עמוד האביזרים — דף גזירה של עיגולי יחידה (+/−) בפריסת המקור: 9×6 */
+.acc-sheet {
+  justify-content: center;
+}
+.acc-grid {
+  /* direction:ltr — פריסה זהה למקור (בשורה האחרונה האדומים משמאל והכחולים מימין) */
+  direction: ltr;
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  align-content: space-evenly;
+  justify-items: center;
+  gap: 6px 10px;
+}
+.acc-chip {
+  width: min(104px, 100%);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 3.5px solid var(--ink);
+  color: #ffffff;
+}
+.acc-chip--pos {
+  background: var(--blue);
+}
+.acc-chip--neg {
+  background: var(--red);
+}
+.acc-chip__sign {
+  font-family: var(--font-rubik), sans-serif;
+  font-weight: 800;
+  font-size: 52px;
+  line-height: 1;
+  direction: ltr;
+  unicode-bidi: isolate;
+  transform: translateY(-2px);
+}
+@media (max-width: 640px) {
+  .acc-chip__sign {
+    font-size: 30px;
+  }
+  .acc-chip {
+    border-width: 2.5px;
+  }
+}
+@media print {
+  .acc-chip {
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+}
+
+/* עיגולי המספרים (+1 / −1) — סט גזירה נוסף לצד עיגולי הסימן, באותו עיצוב עיגול בדיוק
+   (אותו גודל, מסגרת וצבעים); רק גודל הגופן קטן יותר כדי להכיל שתי תווים (+1 / −1) */
+.acc-chip__num {
+  font-family: var(--font-rubik), sans-serif;
+  font-weight: 800;
+  font-size: 38px;
+  line-height: 1;
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+@media (max-width: 640px) {
+  .acc-chip__num {
+    font-size: 22px;
+  }
+}
+
+/* לוחות ריקים להדפסה (חיבור / כפל) — אותו לוח כמו במצגת, למילוי ביד */
+.acc-board-sheet {
+  justify-content: flex-start;
+  gap: 22px;
+}
+.acc-board__title {
+  text-align: center;
+  font-family: var(--font-rubik), sans-serif;
+  font-weight: 800;
+  font-size: clamp(24px, 4.2vw, 44px);
+  line-height: 1.1;
+  color: var(--wsink);
+  margin-top: 6px;
+}
+.acc-board__wrap {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.acc-board__wrap svg {
+  width: 100%;
+  height: auto;
+  max-height: 100%;
+}
+/* ציר המספרים אנכי (portrait) — מוגבל-גובה כדי למלא את הדף לגובה בלי לגלוש */
+.acc-nl-sheet .acc-board__wrap svg {
+  width: auto;
+  height: 100%;
+  max-width: 100%;
+}
+@media print {
+  .acc-board__wrap svg {
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+}
+
+/* הדפסה — A4 נקי, בלי סרגלים */
+@media print {
+  [data-noprint],
+  .topbar,
+  .sitenav {
+    display: none !important;
+  }
+  html,
+  body,
+  .ws-page {
+    background: #fff !important;
+    padding: 0 !important;
+  }
+  .ws-page__sheets {
+    gap: 0;
+    padding-top: 0;
+  }
+  .ws-sheet {
+    /* A4 מדויק בהדפסה: עמוד 297mm פחות שולי 9mm×2 → גובה קבוע, דף אחד בדיוק לכל גיליון */
+    width: 100%;
+    aspect-ratio: auto;
+    height: 278mm;
+    overflow: hidden;
+    box-shadow: none;
+    border-radius: 0;
+    border-width: 1.5px;
+    page-break-after: always;
+    break-after: page;
+  }
+  /* קורא דף-עבודה: המסגרת מתרחבת, עמוד-תמונה הופך לעמוד A4 שלם, בלי עמוד ריק בסוף */
+  .ws-wsframe {
+    width: 100%;
+  }
+  .ws-imgpage {
+    aspect-ratio: auto;
+    height: 278mm;
+    box-shadow: none;
+    border-radius: 0;
+    page-break-after: always;
+    break-after: page;
+  }
+  .ws-imgpage img {
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+  .ws-page__sheets .ws-wsframe:last-child .ws-sheet,
+  .ws-page__sheets .ws-wsframe:last-child .ws-imgpage {
+    page-break-after: auto;
+    break-after: auto;
+  }
+}
+@page {
+  size: A4;
+  margin: 9mm;
+}
+
+@media (max-width: 640px) {
+  .ws-sheet {
+    padding: 24px 18px 20px;
+  }
+  /* מובייל: בקריאת דף בודד יחס ה-A4 הקשיח משתחרר והדף גדל לגובה התוכן — שלא
+     ייחתך טקסט. הספר המדפדף וההדפסה אינם מושפעים (אין שם ws-page__sheets). */
+  .ws-page__sheets .ws-sheet {
+    aspect-ratio: auto;
+  }
+  .ws-logo {
+    width: 46px;
+    height: 46px;
+  }
+  .wsbar__title {
+    font-size: var(--step--1);
+    /* שורה מלאה משלה — אחרת הכותרת נדחסת לעמודה צרה בין קבוצות הכפתורים */
+    flex-basis: 100%;
+  }
+}
+
+/* ============================================================
+   אביזרים נלווים להמחשה — אינדקס נושאים + עמוד נושא
+   ============================================================ */
+/* תצוגה מקדימה חיה של דף A4: הגיליון המלא (860px) מוקטן ב-transform לקופסה
+   בעלת יחס A4 — חד בכל גודל, בלי תמונות. הרוחבים קבועים ולכן ה-scale קבוע. */
+.aidtopics {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 18px;
+}
+.aidtopic {
+  display: flex;
+  gap: 16px;
+  height: 100%;
+  background: #fff;
+  border: 1px solid var(--border, #e6eaf2);
+  border-radius: 18px;
+  padding: 16px;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+}
+.aidtopic:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lg, 0 14px 34px rgba(15, 23, 42, 0.12));
+  border-color: var(--gold-line);
+}
+.aidtopic:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 2px;
+}
+.aidtopic__preview,
+.aiditem__preview {
+  flex: none;
+  position: relative;
+  aspect-ratio: 210 / 297;
+  border: 1px solid var(--border, #e6eaf2);
+  border-radius: 10px;
+  overflow: hidden;
+  background: #fff;
+}
+.aidtopic__preview {
+  width: 132px;
+}
+.aidtopic__page,
+.aiditem__page {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 860px;
+  transform-origin: top right;
+  pointer-events: none;
+}
+/* ‏scale = רוחב-התצוגה ÷ 860 (רוחב הגיליון האמיתי) */
+.aidtopic__page {
+  transform: scale(0.1535);
+}
+.aidtopic__page .ws-sheet,
+.aiditem__page .ws-sheet {
+  width: 860px;
+  border-radius: 0;
+  border-width: 4px;
+}
+.aidtopic__text {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  justify-content: center;
+}
+.aidtopic__title {
+  font-family: var(--font-rubik), sans-serif;
+  font-weight: 800;
+  font-size: var(--step-1);
+  color: var(--ink);
+  line-height: 1.35;
+}
+.aidtopic__count {
+  font-family: var(--font-rubik), sans-serif;
+  font-weight: 700;
+  font-size: var(--step--1);
+  color: var(--teal);
+}
+.aidtopic__blurb {
+  font-size: var(--step--1);
+  line-height: 1.6;
+  color: var(--text-soft);
+}
+
+/* עמוד נושא — שורת ניווט + רשת דפים */
+.aidtopic__bar {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 22px;
+}
+.aidtopic__barcount {
+  font-family: var(--font-rubik), sans-serif;
+  font-weight: 700;
+  color: var(--text-soft);
+}
+.aidgrid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+}
+.aiditem {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border: 1px solid var(--border, #e6eaf2);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+}
+.aiditem:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lg, 0 14px 34px rgba(15, 23, 42, 0.12));
+  border-color: var(--gold-line);
+}
+.aiditem__open {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  text-decoration: none;
+  color: inherit;
+}
+.aiditem__open:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: -3px;
+  border-radius: 16px;
+}
+.aiditem__preview {
+  width: 96px;
+}
+.aiditem__page {
+  transform: scale(0.1116);
+}
+.aiditem__label {
+  font-family: var(--font-rubik), sans-serif;
+  font-weight: 700;
+  font-size: var(--step-0);
+  line-height: 1.45;
+  color: var(--ink);
+}
+.aiditem__acts {
+  display: flex;
+  gap: 8px;
+  padding: 0 16px 14px;
+}
+@media (max-width: 640px) {
+  .aidtopics,
+  .aidgrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ===== אביזרים נלווים להמחשה (אתר הזוויות) ===== */
+/* גוף הגיליון חייב להתכווץ (min-height:0) כדי שאיור גבוה לא ידחוף את הקרדיט מחוץ לדף */
+.ws-sheet .ws-body {
+  min-height: 0;
+}
+/* איור הדף ממלא את גוף הגיליון, ממורכז, וחד גם בהדפסה */
+.aid-fig {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.aid-fig svg {
+  width: 100%;
+  height: auto;
+  max-height: 100%;
+}
+@media print {
+  .aid-fig svg {
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+  /* בלי עמוד ריק בסוף — הגיליון האחרון לא צריך מעבר-עמוד אחריו */
+  .ws-page__sheets .ws-sheet:last-child {
+    page-break-after: auto;
+    break-after: auto;
+  }
+}
+
+
+/* נגן הסרטון (VideoSection) — מסגרת 16:9 כהה בתוך pdfframe, הווידאו ממלא אותה במדויק */
+.videobox {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background: var(--ink);
+}
+.videobox video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════
+   ▼▼▼  שכבת עיצוב אחידה (Unified Theme) — נוספה אוטומטית. דורסת את ההגדרות שמעל.  ▼▼▼
+   ═══════════════════════════════════════════════════════════════════════ */
+/* ============================================================================
+   מערכת עיצוב אחידה · Unified Theme
+   מאחד את «מספרים מכוונים» ו«זוויות» לשפה ויזואלית אחת.
+
+   איך משתמשים:
+   1. הדביקו את הבלוק הזה בסוף globals.css של כל אחד משני האתרים
+      (הוא דורס את ה־:root הקיים ומיישר את הרכיבים).
+   2. הוסיפו class לתגית <body> של כל אתר:
+        • מספרים מכוונים →  <body class="site-numbers">
+        • זוויות         →  <body class="site-angles">
+      (ב-Next.js: className ב-<body> בתוך layout.tsx)
+   3. שני האתרים חולקים מעכשיו נייבי + זהב + טיפוגרפיה + קצב זהים;
+      רק צבע-החתימה (--accent) מתחלף לכל אתר.
+
+   אין צורך לגעת ב־HTML/מלל — כל הרכיבים כבר משתמשים במחלקות האלו.
+   ============================================================================ */
+
+:root {
+  /* ---- נייר ומשטחים (נייר חם עדין, יוקרתי) ---- */
+  --bg: #f3f0e9;
+  --surface: #ffffff;
+  --surface-soft: #fbfaf6;
+  --text: #202a40;
+  --text-soft: #5a6479;
+  --muted: #8b93a5;
+
+  /* ---- עוגן משותף: נייבי עמוק + זהב עתיק ---- */
+  --ink: #11203c;
+  --ink-2: #0e1830;
+  --on-dark: #eef2fb;
+  --on-dark-soft: #aeb9d2;
+  --surface-on-dark: rgba(255, 255, 255, 0.06);
+  --border-on-dark: rgba(255, 255, 255, 0.14);
+
+  --gold: #c2a24e;
+  --gold-strong: #a9863a;
+  --gold-soft: #f6efdd;
+  --gold-line: #e3d3a4;
+
+  --teal: #1f7a5c;
+  --teal-soft: #e4f2ec;
+  --teal-line: #bcd8d5;
+
+  --cream: #fbf7ee;
+  --cream-line: #ecdfc3;
+
+  /* ---- צבע-חתימה לכל אתר (ברירת מחדל = כחול המספרים) ---- */
+  --accent: #2d6cb3;
+  --accent-strong: #245a96;
+  --accent-soft: #e9f1fb;
+  --accent-line: #cfe0f4;
+  /* צבע-נגד (במספרים = אדום השלילי; מותאם לכל אתר למטה) */
+  --contra: #c0433b;
+  --contra-soft: #fbeceb;
+
+  /* תאימות לאחור: שמות ותיקים שהקוד עדיין מזכיר */
+  --blue: var(--accent);
+  --blue-strong: var(--accent-strong);
+  --blue-soft: var(--accent-soft);
+  --red: var(--contra);
+  --red-strong: #b23a33;
+  --red-soft: var(--contra-soft);
+
+  --border: #ece7db;
+  --shadow-sm: 0 1px 2px rgba(17, 32, 60, 0.05);
+  --shadow-md: 0 14px 40px rgba(17, 32, 60, 0.10);
+  --shadow-lg: 0 30px 70px rgba(17, 32, 60, 0.14);
+
+  --radius: 16px;
+  --radius-sm: 12px;
+  --radius-btn: 12px;
+  --radius-pill: 999px;
+  --maxw: 1180px;
+  --nav-h: 56px;
+  /* גופנים: Rubik לכותרות + Assistant לגוף — הזוג נטען ב-layout.tsx של שני האתרים.
+     (זוויות: יש להוסיף את ייבוא Assistant ל-layout כפי שנעשה בקבצים המצורפים.) */
+}
+
+/* ===== צבע-חתימה לכל אתר ===== */
+body.site-numbers {
+  --accent: #2d6cb3;         /* כחול חיובי */
+  --accent-strong: #245a96;
+  --accent-soft: #e9f1fb;
+  --accent-line: #cfe0f4;
+  --contra: #c0433b;         /* אדום שלילי */
+  --contra-soft: #fbeceb;
+}
+body.site-angles {
+  --accent: #1f7a5c;         /* אמרלד גיאומטרי */
+  --accent-strong: #185f48;
+  --accent-soft: #e4f2ec;
+  --accent-line: #bcd8d5;
+  --contra: #3a4a9e;         /* לבנדר-אינדיגו */
+  --contra-soft: #eef1fc;
+}
+
+/* ============================================================================
+   יישור רכיבים — הופך את שני האתרים לזהים במבנה, ברדיוס, בצל ובקצב.
+   ============================================================================ */
+
+/* ---- טופבר: נייבי + פס זהב, אחיד ---- */
+.topbar { background: var(--ink); color: var(--on-dark); border-bottom: 2px solid var(--gold); }
+.topbar__strip { background: transparent; }
+.topbar__lead { color: var(--gold); }
+.topbar__year { background: transparent; color: #fff; }
+.topbar__logo { border: 3px solid var(--gold);
+  box-shadow: 0 0 0 3px rgba(255,255,255,.14), 0 6px 18px rgba(0,0,0,.45), 0 0 24px rgba(194,162,78,.4); }
+
+/* ---- ניווט דביק: קו-זהב מונפש בריחוף ---- */
+.sitenav { background: rgba(255,255,255,.86); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--gold-line); }
+.sitenav__link { color: var(--text-soft); border-radius: var(--radius-pill); position: relative;
+  transition: color .18s ease; text-decoration: none; }
+.sitenav__link::after { content: ""; position: absolute; inset-inline: 12px; bottom: 5px; height: 3px;
+  border-radius: 3px; background: var(--gold); transform: scaleX(0); transform-origin: right;
+  transition: transform .34s cubic-bezier(.22,.7,.2,1); }
+.sitenav__link:hover { color: var(--ink); background: transparent; text-decoration: none; }
+.sitenav__link:hover::after { transform: scaleX(1); }
+/* מצב active — הקישור של האזור הנוכחי (aria-current): דיו מלא + קו-זהב קבוע */
+.sitenav__link[aria-current="page"] { color: var(--ink); font-weight: 700; }
+.sitenav__link[aria-current="page"]::after { transform: scaleX(1); }
+
+/* ---- eyebrow: הדגשת-מרקר זהב עדינה (במקום צהוב ניאון / גלולת-מנטה) ---- */
+.section__eyebrow, .hero__eyebrow {
+  display: inline-block; color: var(--ink); background: transparent;
+  box-shadow: inset 0 -0.55em 0 var(--gold-soft); border: 0; padding: 2px 6px;
+  font-family: var(--font-rubik), sans-serif; font-weight: 700; border-radius: 0; }
+
+/* ---- Hero: בלוק שקט עם זוהר-זהב עדין ועומק רך ---- */
+.hero {
+  background: radial-gradient(1100px 460px at 90% -25%, var(--teal-soft), transparent 60%),
+              radial-gradient(820px 380px at -8% -12%, var(--gold-soft), transparent 55%),
+              var(--surface);
+  border-bottom: 1px solid var(--gold-line); }
+.hero__title { color: var(--ink); font-weight: 800; }
+.hero__cover { border: 1px solid var(--gold-line); border-radius: var(--radius); box-shadow: var(--shadow-lg); }
+
+/* ---- Hero עם מדיה: כותרת מימין, אנימציית הזוויות משמאל ---- */
+.hero__grid--media {
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+}
+/* פאנל הווידאו: הרקע השחור של הסרטון משולב במסגרת כהה בשפת ה-pdfframe —
+   קו-זהב דק, פינות מעוגלות, צל רך. aspect-ratio קבוע ⇒ אין קפיצת פריסה. */
+.herovid {
+  aspect-ratio: 16 / 9;
+  background: #000;
+  border: 1px solid var(--gold-line);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+}
+.herovid video,
+.herovid img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+@media (max-width: 900px) {
+  .hero__grid--media {
+    grid-template-columns: 1fr;
+    gap: 26px;
+  }
+}
+
+/* ---- כפתורים: מלבן רך יוקרתי (12px), משיכת-ברק בריחוף ---- */
+.btn { border-radius: var(--radius-btn); transition: transform .16s ease, box-shadow .24s ease, background .2s ease; }
+.btn::after { content: none; }
+.btn--primary { background: var(--accent); color: #fff; box-shadow: 0 6px 18px color-mix(in srgb, var(--accent) 28%, transparent); }
+.btn--primary:hover { background: var(--accent-strong); transform: translateY(-2px);
+  box-shadow: 0 12px 26px color-mix(in srgb, var(--accent) 36%, transparent); }
+.btn--ghost { background: var(--surface); color: var(--accent); border: 1px solid var(--accent-line); }
+.btn--ghost:hover { background: var(--accent-soft); border-color: var(--accent); }
+.btn--gold { background: var(--gold); color: var(--ink); }
+.btn--gold:hover { filter: brightness(1.05); }
+
+/* ---- כרטיסים: משטח לבן, קו-זהב עליון, הרמה רכה בריחוף ---- */
+.card, .qcard, .wcard, .explain, .exgroup, .cta, .curric-col {
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+  box-shadow: var(--shadow-sm); transition: transform .28s cubic-bezier(.22,.7,.2,1), box-shadow .28s ease, border-color .28s ease; }
+.qcard, .exgroup, .cta { border-top: 3px solid var(--gold); }
+.wcard:hover, .qcard:hover, .curr-img:hover, .card:hover {
+  transform: translateY(-5px); box-shadow: var(--shadow-md); border-color: var(--gold-line); }
+
+/* ---- תגיות/צ'יפים ---- */
+.section__eyebrow + *, .curric-col__tag, .qcard__badge {
+  border-radius: var(--radius-pill); }
+
+/* ---- מוטיב הסימן +1/−1 (מספרים) / הזוויות (זוויות) ---- */
+.signbadge--pos { color: var(--accent); border: 2px solid var(--accent); background: var(--accent-soft); }
+.signbadge--neg { color: var(--contra); border: 2px solid var(--contra); background: var(--contra-soft); }
+
+/* ---- מסגרות מציגים/וידאו: נייבי + קו-זהב אחיד ---- */
+.viewer, .video, .pdfframe { border: 1px solid var(--gold-line); border-radius: var(--radius); box-shadow: var(--shadow-md); }
+.pdfframe { background: var(--ink); }
+
+/* ---- פוטר ---- */
+.footer { background: var(--ink-2); color: var(--on-dark-soft); border-top: 2px solid var(--gold); }
+.footer__logo { border: 2.5px solid var(--gold); }
+
+/* ============================================================================
+   תנועה יוקרתית שקטה (רשות) — הוסיפו class="reveal" לאלמנטים לחשיפה בגלילה.
+   הכל מכבד prefers-reduced-motion.
+   ============================================================================ */
+.reveal { opacity: 1; transform: none;
+  transition: opacity .8s cubic-bezier(.22,.7,.2,1), transform .8s cubic-bezier(.22,.7,.2,1); }
+.reveal.is-armed { opacity: 0; transform: translateY(26px); }
+.reveal.is-armed.is-in { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal, .reveal.is-armed { opacity: 1 !important; transform: none !important; transition: none; }
+  .btn:hover { transform: none; }
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════
+   לוגו מסתובב — סיבוב איטי מאוד ומתמשך (תנועה מתמדת). זהה בשני האתרים.
+   ═══════════════════════════════════════════════════════════════════════ */
+@keyframes logo-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+.topbar__logo { animation: logo-spin 20s linear infinite; transform-origin: 50% 50%; will-change: transform; }
+
+/* ═══════════════════════════════════════════════════════════════════════
+   כותרת-ההשראה מעל סרטון "המירוץ למיליון" — כתב-יד עגול (Gveret Levin) +
+   אקצנט זווית 45°. נוסף אחרי שכבת ה-Unified Theme כדי שלא יידרס.
+   ═══════════════════════════════════════════════════════════════════════ */
+.section--video .vtag {
+  max-width: 46rem;
+  margin: 4px auto clamp(26px, 4vw, 46px);
+  text-align: center;
+  font-family: var(--font-gveret), var(--font-rubik), cursive;
+  font-weight: 400;
+  color: var(--ink);
+  font-size: clamp(2rem, 1.3rem + 3.1vw, 3.6rem);
+  line-height: 1.42;
+  letter-spacing: 0;
+  text-wrap: balance;
+}
+/* "45°": עטיפה יחסית — ציור הזווית יושב ברקע מאחורי המספר */
+.section--video .vtag__deg {
+  position: relative;
+  display: inline-block;
+}
+/* ציור הזווית ברקע: מלוכסן מעט ובהיר (אותו ציור, מוחלש) — המספר קורא מעליו */
+.section--video .vtag__deg-bg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 2em;
+  height: auto;
+  transform: translate(-62%, -22%) rotate(-13deg);
+  color: var(--ink);
+  opacity: 0.3;
+  z-index: 0;
+  pointer-events: none;
+  overflow: visible;
+}
+.section--video .vtag__line {
+  display: block;
+}
+.section--video .vtag__line + .vtag__line {
+  margin-top: 0.1em;
+}
+/* המספר "45°" עצמו — מעל ציור הרקע, ללא קו-מרקר */
+.section--video .vtag__hi {
+  position: relative;
+  z-index: 1;
+  unicode-bidi: isolate;
+  padding: 0 0.06em;
+  color: var(--ink);
+  white-space: nowrap;
+}
+/* קרדיט קטן על סרגל הנגן הכהה — כתב-יד עגול (Gveret Levin) לבן */
+.section--video .pdfframe__title.vtag__credit {
+  font-family: var(--font-gveret), var(--font-rubik), cursive;
+  font-weight: 400;
+  font-size: var(--step--1);
+  color: #fff;
+  opacity: 0.92;
+  letter-spacing: 0.045em;
+  word-spacing: 0.18em;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   עמוד 1 בחוברת — דף הפתיחה (מכתב איילת קריספין). גיליון A4 בשפת החוברת:
+   לוגו קטן מסתובב, כותרת, מכתב (פתיחה/חתימה בכתב-יד Gveret Levin, גוף
+   באסיסטנט), ופינת-מחברת עם תמונה ותארים. תוכן המכתב: איילת קריספין.
+   ═══════════════════════════════════════════════════════════════════════ */
+.bkopen__sheet {
+  width: min(860px, 100%);
+  aspect-ratio: 210 / 297;
+  background: #fff;
+  border: 1px solid var(--gold-line);
+  border-radius: var(--radius);
+  box-shadow: 0 10px 40px rgba(15, 23, 42, 0.14);
+  overflow: hidden;
+}
+.bkopen {
+  /* ורוד כהה יפה וקריא — צבע כתב-היד של מכתב איילת (פתיחה, גוף וחתימה) */
+  --rose: #b0396b;
+  position: relative;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  text-align: center;
+  padding: clamp(30px, 5vw, 52px) clamp(30px, 6vw, 58px) clamp(26px, 4.4vw, 46px);
+  background: radial-gradient(900px 380px at 100% -12%, var(--gold-soft), transparent 60%), #fff;
+}
+
+/* מסטהד — הכותרת יושבת בשורת הלוגו: לוגו מסתובב בפינה הימנית, כותרת ממורכזת */
+.bkopen__masthead {
+  position: relative;
+  width: 100%;
+  min-height: clamp(56px, 8vw, 72px);
+  z-index: 1;
+}
+.bkopen__logo {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: block;
+  width: clamp(56px, 8vw, 72px);
+  height: clamp(56px, 8vw, 72px);
+  border-radius: 50%;
+  border: 3px solid var(--gold);
+  animation: logo-spin 20s linear infinite;
+  transform-origin: 50% 50%;
+  will-change: transform;
+}
+
+/* מוטיב-זווית — זווית קלאסית נוטה מעט, רקע בהיר מאוד מאחורי הכותרת העליונה */
+.bkopen__angle {
+  position: absolute;
+  top: clamp(8px, 2.4vw, 26px);
+  left: 50%;
+  transform: translateX(-50%) rotate(-12deg);
+  transform-origin: 50% 50%;
+  width: clamp(158px, 22vw, 220px);
+  height: auto;
+  z-index: 0;
+  opacity: 0.11;
+  pointer-events: none;
+}
+.bkopen__angle-ray { stroke: var(--ink); stroke-width: 4; fill: none; stroke-linecap: round; }
+.bkopen__angle-arc { stroke: var(--ink); stroke-width: 4; fill: none; stroke-linecap: round; }
+.bkopen__angle-vertex { fill: var(--ink); }
+
+/* הכותרת ממורכזת בתוך המסטהד, בגובה הלוגו; ריפוד-צד קטן שלא תיגע בלוגו */
+.bkopen__heading {
+  padding: 0 clamp(70px, 12vw, 96px);
+}
+.bkopen__title {
+  margin: 0;
+  font-family: var(--font-rubik), sans-serif;
+  font-weight: 800;
+  font-size: clamp(27px, 4.4vw, 42px);
+  line-height: 1.2;
+  color: var(--ink);
+}
+.bkopen__subtitle {
+  margin: 10px 0 0;
+  font-family: var(--font-rubik), sans-serif;
+  font-weight: 500;
+  font-size: clamp(15px, 2vw, 19px);
+  line-height: 1.4;
+  color: var(--text-soft);
+}
+
+/* אמצע — המכתב והדיוקן ממורכזים אנכית בשטח שבין המסטהד לפוטר */
+.bkopen__middle {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(22px, 3.6vw, 36px);
+  width: 100%;
+  z-index: 1;
+}
+
+/* דיוקן עגול יוקרתי — מסגרת לבנה + טבעת זהב דקה + צל רך */
+.bkopen__portrait {
+  margin: 0;
+}
+.bkopen__portrait-img {
+  display: block;
+  width: clamp(124px, 17vw, 158px);
+  height: clamp(124px, 17vw, 158px);
+  object-fit: cover;
+  object-position: 50% 50%;
+  border-radius: 50%;
+  border: 4px solid #fff;
+  box-shadow: 0 0 0 2px var(--gold), 0 14px 30px rgba(15, 23, 42, 0.18);
+}
+
+/* מכתב איילת — כולו בכתב-יד עגול (Gveret Levin) ובוורוד כהה יפה וקריא.
+   ירידות השורה מדויקות כמו במקור (מנוהלות ב-JSX), הפיסוק העברי תקין (ז׳ / ת״ל). */
+.bkopen__letter {
+  max-width: min(100%, 37rem);
+  margin: 0;
+  font-family: var(--font-gveret), var(--font-rubik), cursive;
+  font-weight: 400;
+  color: var(--rose);
+}
+.bkopen__greeting {
+  margin: 0 0 20px;
+  font-size: clamp(25px, 3.6vw, 33px);
+  line-height: 1.3;
+}
+.bkopen__body {
+  margin: 0 0 22px;
+  font-size: clamp(21px, 2.8vw, 27px);
+  line-height: 1.6;
+}
+.bkopen__signoff {
+  margin: 26px 0 4px;
+  font-size: clamp(23px, 3.1vw, 29px);
+  line-height: 1.3;
+}
+.bkopen__signature {
+  margin: 0;
+  font-size: clamp(32px, 4.6vw, 42px);
+  line-height: 1.2;
+}
+
+/* פוטר — קו-רוחב דק יוקרתי + קרדיט/תארים/שנה״ל/קשר בצורת "כותרת תחתית" נקייה */
+.bkopen__footer {
+  width: 100%;
+  z-index: 1;
+}
+/* קו-רוחב דק יוקרתי — זהב מתעמעם בקצוות */
+.bkopen__rule {
+  height: 1px;
+  width: 100%;
+  margin: 0 0 clamp(14px, 2.2vw, 20px);
+  background: linear-gradient(to right, transparent, var(--gold) 22%, var(--gold) 78%, transparent);
+  opacity: 0.7;
+}
+.bkopen__byline {
+  margin: 0 0 8px;
+  font-family: var(--font-assistant), sans-serif;
+  font-weight: 600;
+  font-size: var(--step-0);
+  color: var(--text);
+}
+.bkopen__byline strong {
+  font-family: var(--font-rubik), sans-serif;
+  font-weight: 700;
+  color: var(--ink);
+}
+.bkopen__credentials {
+  margin: 0 0 12px;
+  padding: 0;
+  list-style: none;
+}
+.bkopen__credentials li {
+  font-family: var(--font-assistant), sans-serif;
+  font-weight: 500;
+  font-size: var(--step-0);
+  line-height: 1.55;
+  color: var(--text-soft);
+}
+/* שורת שנה״ל + קשר — ממורכזת */
+.bkopen__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 8px 16px;
+}
+/* שנה״ל — טקסט מודגש כהה (בלי צ'יפ ירוק שלא תואם לעיצוב) + הדגשת-מרקר זהב עדינה */
+.bkopen__year {
+  display: inline-block;
+  color: var(--ink);
+  font-family: var(--font-rubik), sans-serif;
+  font-weight: 700;
+  font-size: var(--step-0);
+  box-shadow: inset 0 -0.5em 0 var(--gold-soft);
+  padding: 0 4px;
+  unicode-bidi: isolate;
+}
+/* פרטי קשר — מייל ואתר, לחיצים אמיתיים, עם אייקון */
+.bkopen__contact {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 5px 16px;
+}
+.bkopen__contact-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--font-assistant), sans-serif;
+  font-weight: 600;
+  font-size: var(--step-0);
+  color: var(--accent);
+  text-decoration: none;
+}
+.bkopen__contact-link:hover {
+  text-decoration: underline;
+}
+.bkopen__contact-link svg {
+  width: 16px;
+  height: 16px;
+  flex: none;
+  color: var(--accent);
+}
+
+@media (max-width: 640px) {
+  .bkopen__heading {
+    padding: 0;
+  }
+  .bkopen__angle {
+    display: none;
+  }
+}
+
+@media print {
+  .bkopen__sheet {
+    width: 100%;
+    aspect-ratio: auto;
+    height: 279mm;
+    box-shadow: none;
+    border-radius: 0;
+  }
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════
+   חוברת מלאה להדפסה / PDF (/worksheets/print) — כל עמוד A4, קישורים נשמרים
+   לחיצים ב-PDF (חיצוניים כ-<a>, תוכן עניינים כעוגני #bk-page-N).
+   ═══════════════════════════════════════════════════════════════════════ */
+.bkprint {
+  background: #eef1f6;
+  padding: 24px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 22px;
+}
+.bkprint__page {
+  width: 210mm;
+  height: 297mm;
+  overflow: hidden;
+  background: #fff;
+  position: relative;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.14);
+}
+/* גיליונות התוכן והשער ממלאים את העמוד המלא (בלי מסגרת/רדיוס/צל פנימי) */
+.bkprint__page .ws-sheet {
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  aspect-ratio: auto;
+  border-radius: 0;
+  box-shadow: none;
+  border: none;
+}
+.bkprint__page .bkopen {
+  height: 100%;
+}
+
+@media print {
+  @page { size: A4; margin: 0; }
+  html, body { margin: 0; background: #fff; }
+  .bkprint { background: #fff; padding: 0; gap: 0; display: block; }
+  .bkprint__page {
+    box-shadow: none;
+    page-break-after: always;
+    break-after: page;
+    /* חצי מ״מ פחות מ-A4: עיגולי mm↔px במנוע ההדפסה מגלישים שבריר-פיקסל
+       ופותחים עמוד ריק — 296.5mm מבטל זאת, והפער הלבן בתחתית בלתי-נראה */
+    height: 296.5mm;
+  }
+  /* ‏last-of-type ולא last-child: Next מזריק תגי script אחרי ה-sections בתוך
+     המכל, ו-last-child לא תופס — ואז break-after נשאר ופותח עמוד PDF ריק בסוף */
+  .bkprint__page:last-of-type {
+    page-break-after: auto;
+    break-after: auto;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   דפי "זווית לכיתה ז׳" (Angles7Sheet) — עיצוב המקור מ-parabula-next, scoped
+   ל-.angle7-page בלבד. הצבעים והמידות נאמנים 1:1 לקבצי המקור
+   (styles/a4-base.css + styles/topics/angle7.css); התוכן הלימודי לא שוּנה.
+---------------------------------------------------------------------------- */
+.angle7-page {
+  --a7-text: #000000;
+  --a7-blue: #1d4ed8;
+  --a7-grid: #cbd5e1;
+  --a7-border: #e2e8f0;
+  --a7-subtle: #f8fafc;
+  font-family: var(--font-rubik), 'Rubik', sans-serif;
+  font-size: 15px;
+  color: var(--a7-text);
+  justify-content: flex-start;
+  gap: 8px;
+}
+/* בגרסת שחור-לבן (הדפסה נבחרת) — הכחול הופך לדיו כהה */
+.ws--bw .angle7-page,
+.ws-bw .angle7-page { --a7-blue: #111111; }
+
+/* בלוק השאלות — עמודה נמתחת על גובה הדף, הכרטיסים מפוזרים במרווחים שווים */
+.angle7-page .question-block {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  gap: 8px;
+}
+
+/* פס כותרת המאגר */
+.angle7-page .chapter-bar {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  background: var(--a7-subtle);
+  border: 1px solid var(--a7-border);
+  border-right: 4px solid var(--a7-blue);
+  border-radius: 10px;
+  padding: 7px 12px;
+  margin: 0;
+  font-weight: 400;
+}
+.angle7-page .chapter-name { font-size: 17px; font-weight: 500; }
+.angle7-page .chapter-sub { margin-inline-start: auto; font-size: 12px; color: #475569; font-weight: 400; }
+
+/* כרטיס שאלה */
+.angle7-page .q {
+  border: 1px solid var(--a7-border);
+  border-radius: 10px;
+  background: #fff;
+  padding: 8px 12px 9px;
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+.angle7-page .qrow { display: flex; align-items: flex-start; }
+.angle7-page .qbody { flex: 1; font-size: 15px; line-height: 1.5; }
+.angle7-page .bullet-container {
+  flex-shrink: 0;
+  margin-left: 10px;
+  height: 24px;
+  width: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.angle7-page .bullet-large { width: 8px; height: 8px; background: var(--a7-text); border-radius: 50%; }
+
+/* LTR למספרים, נקודות ואותיות לועזיות */
+.angle7-page .ltr { direction: ltr; unicode-bidi: isolate; }
+
+/* סימן זווית וקטורי כמו בספרי הלימוד — משמאל לאותיות */
+.angle7-page .angname { display: inline-flex; align-items: baseline; white-space: nowrap; }
+.angle7-page .ang { width: 15px; height: 12px; flex: 0 0 auto; align-self: center; margin-right: 3px; transform: translateY(1px); }
+
+/* רב-ברירה — ארבע אפשרויות בשורה (mc3 = שלוש) */
+.angle7-page .mc { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px 14px; margin: 5px 0 0; }
+.angle7-page .mc.mc3 { grid-template-columns: repeat(3, 1fr); }
+.angle7-page .opt { display: flex; gap: 8px; align-items: baseline; }
+.angle7-page .ol {
+  width: 21px;
+  height: 21px;
+  border: 1.5px solid var(--a7-grid);
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 500;
+  color: #475569;
+  flex: 0 0 auto;
+}
+.angle7-page .ot { flex: 1; }
+
+/* משפטי נכון / לא נכון */
+.angle7-page .stmts { margin-top: 4px; }
+.angle7-page .stmt { display: flex; gap: 8px; align-items: baseline; margin: 6px 0 0; }
+.angle7-page .slab { color: var(--a7-blue); font-weight: 500; flex: 0 0 auto; min-width: 18px; }
+.angle7-page .stext { flex: 1; }
+.angle7-page .tfrow { display: inline-flex; gap: 16px; flex: 0 0 auto; }
+
+/* שורות הסבר */
+.angle7-page .lines { margin: 6px 0 0; }
+.angle7-page .ln { height: 24px; border-bottom: 1.5px dotted #94a3b8; }
+
+/* אזור עבודה: מערכת צירים לצד שדות תשובה */
+.angle7-page .workrow { display: flex; align-items: center; justify-content: center; gap: 34px; flex-wrap: wrap; margin-top: 3px; }
+.angle7-page .pairs-col { display: flex; flex-direction: column; gap: 18px; }
+
+/* זוגות סדורים למילוי */
+.angle7-page .ansrow { display: flex; align-items: baseline; gap: 26px; flex-wrap: wrap; margin: 5px 0 0; }
+.angle7-page .pair { direction: ltr; unicode-bidi: isolate; display: inline-flex; align-items: baseline; gap: 5px; font-size: 15px; }
+.angle7-page .pl { color: var(--a7-text); font-weight: 500; }
+.angle7-page .pblank { display: inline-block; width: 36px; height: 16px; border-bottom: 1.5px solid #111827; }
+
+/* איור וקטורי — מערכת צירים רביע ראשון */
+.angle7-page .figure { margin: 4px auto 0; text-align: center; break-inside: avoid; page-break-inside: avoid; }
+.angle7-page .fig-angle { max-width: 256px; margin-inline: auto; }
+.angle7-page .fig-b { width: 232px; flex: 0 0 auto; margin: 0; }
+.angle7-page svg.chart {
+  display: block;
+  margin: 2px auto;
+  max-width: 100%;
+  height: auto;
+  shape-rendering: geometricPrecision;
+  text-rendering: geometricPrecision;
+}
+.angle7-page svg.chart line,
+.angle7-page svg.chart path,
+.angle7-page svg.chart circle { vector-effect: non-scaling-stroke; }
+.angle7-page svg.chart text { font-family: var(--font-rubik), 'Rubik', sans-serif; }
+/* עמוד 2 מרוּוח יותר — סרטוטים גדולים יותר; עמוד 3 — סרטוט הסימון מוקטן מעט */
+.angle7-page--2 .fig-angle { max-width: 320px; }
+.angle7-page--2 .fig-b { width: 280px; }
+.angle7-page--3 .fig-angle { max-width: 238px; }
+
+/* ═══════════════════════════════════════════════════════════════════════
+   מקטע הסיום "הזירה" (עמוד הבית) — במה כהה אחרונה לפני הפוטר.
+   שכבות: רקע-עצמי מטושטש (+פרלקסת גלילה בדפדפנים תומכים) → קרני לייזר
+   עדינות → מסגרת זהב עם Ken Burns, הטיה תלת-ממדית וברק נודד (FinaleSection).
+   הכניסה בגלילה — מנגנון ה-reveal האתרי. הכול מכבד prefers-reduced-motion.
+   ═══════════════════════════════════════════════════════════════════════ */
+.finale {
+  position: relative;
+  overflow: hidden;
+  background: var(--ink-2);
+  margin-top: 64px;
+}
+/* הזירה הכהה נשפכת ישירות אל הפוטר הכהה — בלי רצועת נייר ביניהם */
+main:has(.finale) + .footer {
+  margin-top: 0;
+}
+.finale__bg {
+  position: absolute;
+  inset: -6%;
+  background: url("/finale/zaviyot-arena-bg.webp") center 22% / cover no-repeat;
+  filter: blur(26px) brightness(0.5) saturate(1.2);
+  transform: scale(1.12);
+}
+/* פרלקסת גלילה — שיפור הדרגתי בדפדפנים עם scroll-driven animations */
+@supports (animation-timeline: view()) {
+  .finale__bg {
+    animation: finale-drift linear both;
+    animation-timeline: view();
+  }
+}
+@keyframes finale-drift {
+  from { transform: scale(1.12) translateY(-3.5%); }
+  to { transform: scale(1.12) translateY(3.5%); }
+}
+/* קרני לייזר — הדים דקים לקווי הזירה שבתמונה, בפלטת הזהב/טורקיז של האתר */
+.finale__beams {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.finale__beams span {
+  position: absolute;
+  inset-inline-start: -30%;
+  width: 160%;
+  height: 1.5px;
+  background: linear-gradient(90deg, transparent, var(--beam, var(--gold)) 45%, transparent);
+  opacity: 0;
+  animation: finale-beam 7s ease-in-out infinite;
+}
+.finale__beams span:nth-child(1) { top: 14%; --beam: #c2a24e; rotate: -7deg; }
+.finale__beams span:nth-child(2) { top: 32%; --beam: #7fd1ff; rotate: 5deg; animation-delay: 1.4s; }
+.finale__beams span:nth-child(3) { top: 52%; --beam: #b489ff; rotate: -4deg; animation-delay: 2.8s; }
+.finale__beams span:nth-child(4) { top: 70%; --beam: #7ee2b0; rotate: 6deg; animation-delay: 4.2s; }
+.finale__beams span:nth-child(5) { top: 87%; --beam: #c2a24e; rotate: -5deg; animation-delay: 5.6s; }
+@keyframes finale-beam {
+  0%, 100% { opacity: 0; transform: translateX(-12%); }
+  50% { opacity: 0.5; transform: translateX(12%); }
+}
+.finale__inner {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  padding-block: clamp(56px, 9vw, 108px);
+  perspective: 1100px;
+}
+/* הרוחב נקבע על העוטף (reveal) — לא על המסגרת עצמה, כדי שלא תקרוס
+   בהתניה מעגלית של אחוזים בתוך flex שמתכווץ לתוכן */
+.finale__inner > .reveal {
+  width: min(500px, 100%);
+}
+.finale__frame {
+  --tiltX: 0deg;
+  --tiltY: 0deg;
+  --glareX: 50%;
+  position: relative;
+  width: 100%;
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--gold-line);
+  outline: 1px solid rgba(194, 162, 78, 0.35);
+  outline-offset: 6px;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.55), 0 0 60px rgba(194, 162, 78, 0.16);
+  transform: rotateX(var(--tiltX)) rotateY(var(--tiltY));
+  transition: transform 0.25s ease;
+  will-change: transform;
+}
+.finale__img {
+  display: block;
+  width: 100%;
+  height: auto;
+  animation: finale-kenburns 26s ease-in-out infinite alternate;
+}
+@keyframes finale-kenburns {
+  from { transform: scale(1); }
+  to { transform: scale(1.07) translateY(-1.6%); }
+}
+/* ברק עדין שנודד עם הסמן על פני המסגרת */
+.finale__glare {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(420px 300px at var(--glareX) 12%, rgba(255, 255, 255, 0.13), transparent 60%);
+  mix-blend-mode: screen;
+}
+@media (max-width: 640px) {
+  .finale {
+    margin-top: 44px;
+  }
+  .finale__frame {
+    outline-offset: 4px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .finale__bg,
+  .finale__img {
+    animation: none;
+  }
+  .finale__beams span {
+    animation: none;
+    opacity: 0.16;
+  }
+  .finale__frame {
+    transform: none;
+    transition: none;
+  }
+}

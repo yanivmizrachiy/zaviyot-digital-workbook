@@ -1,0 +1,41 @@
+{
+  "name": "zaviyot",
+  "version": "1.0.0",
+  "private": true,
+  "description": "יחידת לימוד מתוקשבת במתמטיקה — זוויות (אתר אחות למספרים מכוונים, עיצוב זהה)",
+  "scripts": {
+    "dev": "next dev",
+    "preview:local": "next dev --hostname 127.0.0.1 --port 3100",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint .",
+    "test": "node --experimental-strip-types --test test/worksheets.test.ts test/sitemap.test.ts test/print-ready.test.ts test/flipbook.test.ts test/aids.test.ts",
+    "typecheck": "tsc --noEmit",
+    "pdf": "node scripts/build-booklet-pdf.mjs",
+    "lint:ci": "eslint . --max-warnings=0",
+    "check": "npm run lint:ci && npm run typecheck && npm test && npm run build && npm run test:routes",
+    "test:routes": "node --experimental-strip-types --test test/routes.test.ts"
+  },
+  "dependencies": {
+    "next": "16.2.10",
+    "pdf-lib": "^1.17.1",
+    "pdfjs-dist": "^6.1.200",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "eslint": "^9.39.5",
+    "eslint-config-next": "^16.2.10",
+    "typescript": "^5.7.0"
+  },
+  "engines": {
+    "node": ">=22.13.0 <23"
+  },
+  "packageManager": "npm@11.6.2",
+  "overrides": {
+    "postcss": "8.5.19"
+  }
+}
