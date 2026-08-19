@@ -17,6 +17,11 @@ export const ILLUSTRATION_VIDEOS: readonly IllustrationVideo[] = [
     title: "זוויות ורביע ראשון",
     youtubeId: "q2CQ-DavCPs",
   },
+  {
+    id: "meshulash-shave-tslaot",
+    title: "משולש שווה צלעות",
+    youtubeId: "PAqq_dsrQqY",
+  },
 ] as const;
 
 export function youtubeWatchUrl(youtubeId: string): string {
