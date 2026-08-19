@@ -7,7 +7,7 @@ import { ILLUSTRATION_VIDEOS, youtubeEmbedUrl, youtubeWatchUrl } from "@/lib/vid
 import styles from "./videos.module.css";
 
 export const metadata: Metadata = {
-  title: "סרטוני המחשה — הוראת זוויות",
+  title: "סרטוני מחשה - איילת קריסיפין",
   description: "סרטוני המחשה נבחרים להוראת זוויות, מרוכזים במקום אחד לצפייה נוחה.",
 };
 
@@ -19,7 +19,7 @@ export default function VideosPage() {
       <main id="main">
         <section className="section" id="videos">
           <div className="container">
-            <SectionHead eyebrow="הוראת זוויות" title="סרטוני המחשה" />
+            <SectionHead eyebrow="הוראת זוויות" title="סרטוני מחשה - איילת קריסיפין" />
             <p className={styles.lead}>סרטונים נבחרים להמחשה ולהוראה בנושא זוויות.</p>
 
             <ul className={styles.grid}>
