@@ -1,9 +1,10 @@
 import type { MetadataRoute } from "next";
 
-// העמודים הציבוריים היציבים בלבד: דף הבית, רשימת דפי העבודה (/worksheets)
-// ואינדקס ההמחשות (/hamchashot) — יש להם title/description ואינם noindex.
-// דפי הקורא (/worksheets/[n], /worksheets/w/[k], /hamchashot/[n]), ההדפסה
-// ו-sugei-zaviyot מסומנים noindex ולכן אינם כאן.
+// העמודים הציבוריים היציבים בלבד: דף הבית, רשימת דפי העבודה (/worksheets),
+// אינדקס ההמחשות (/hamchashot) ועמוד סרטוני ההמחשה (/videos) — יש להם
+// title/description ואינם noindex. דפי הקורא (/worksheets/[n],
+// /worksheets/w/[k], /hamchashot/[n]), ההדפסה ו-sugei-zaviyot מסומנים
+// noindex ולכן אינם כאן.
 // בלי lastModified מלאכותי — אין תאריך-תוכן אמיתי, ותאריך-build גורם לכל
 // פריסה להיראות כשינוי תוכן.
 const SITE_URL = "https://zaviyot.vercel.app";
@@ -12,6 +13,7 @@ const SITE_URL = "https://zaviyot.vercel.app";
 export const PUBLIC_ROUTES = [
   "/",
   "/worksheets",
+  "/videos",
   "/hamchashot",
   "/hamchashot/t/concept",
   "/hamchashot/t/measure",
