@@ -22,6 +22,11 @@ export const ILLUSTRATION_VIDEOS: readonly IllustrationVideo[] = [
     title: "משולש שווה צלעות",
     youtubeId: "PAqq_dsrQqY",
   },
+  {
+    id: "zaviyot-bemeshulash-shave-shokayim",
+    title: "זוויות במשולש שווה שוקיים",
+    youtubeId: "D5UJsL3Pdj4",
+  },
 ] as const;
 
 export function youtubeWatchUrl(youtubeId: string): string {
