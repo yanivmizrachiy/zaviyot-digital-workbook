@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { SITE_URL } from "@/lib/site";
 
 // העמודים הציבוריים היציבים בלבד: דף הבית, רשימת דפי העבודה (/worksheets),
 // אינדקס ההמחשות (/hamchashot) ועמוד סרטוני ההמחשה (/videos) — יש להם
@@ -7,7 +8,6 @@ import type { MetadataRoute } from "next";
 // noindex ולכן אינם כאן.
 // בלי lastModified מלאכותי — אין תאריך-תוכן אמיתי, ותאריך-build גורם לכל
 // פריסה להיראות כשינוי תוכן.
-const SITE_URL = "https://zaviyot.vercel.app";
 
 // רשימה מיוצאת כדי שבדיקת ה-sitemap תאמת אותה מול המסלולים הידועים.
 export const PUBLIC_ROUTES = [

@@ -10,5 +10,6 @@
 - התאמה למחשב ולטלפון.
 
 ## קישורים
+- אתר: https://zaviyot-digital-workbook.vercel.app
 - Facebook: https://www.facebook.com/profile.php?id=61562668603240
 - Instagram: https://www.instagram.com/yani__raz

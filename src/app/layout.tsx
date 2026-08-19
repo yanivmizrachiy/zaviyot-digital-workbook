@@ -1,14 +1,11 @@
 import type { Metadata, Viewport } from "next";
 import { Rubik, Assistant } from "next/font/google";
 import localFont from "next/font/local";
-import { InPageTransitions } from "@/components/InPageTransitions";
 import Script from "next/script";
+import { InPageTransitions } from "@/components/InPageTransitions";
+import { SITE_DESC, SITE_URL } from "@/lib/site";
 import "./globals.css";
 
-// עיצוב בהשראת Oak National Academy: גופן גיאומטרי-מעוגל אחד לכל האתר
-// (Oak משתמשים ב-Lexend בלבד; Lexend לא תומך בעברית, לכן Rubik — קרוב לו
-// באופי — הוא הגופן היחיד כאן. globals.css מכוון גם את --font-assistant
-// לאותו גופן, כך שאין עוד שימוש בגופן שני.
 const rubik = Rubik({
   subsets: ["hebrew", "latin"],
   weight: ["300", "400", "500", "600", "700", "800"],
@@ -16,7 +13,6 @@ const rubik = Rubik({
   display: "swap",
 });
 
-// מערכת עיצוב אחידה: Assistant לגוף הטקסט (זהה ל«מספרים מכוונים»), Rubik לכותרות.
 const assistant = Assistant({
   subsets: ["hebrew", "latin"],
   weight: ["400", "500", "600", "700"],
@@ -24,21 +20,12 @@ const assistant = Assistant({
   display: "swap",
 });
 
-// גופן כתב-יד עברי עגול "Gveret Levin" (AlefAlefAlef, רישיון OFL) — מאורח
-// עצמית (הקובץ ב-src/fonts) כי הגופן אינו ברשימת next/font/google של Next.
-// לשימוש נקודתי בלבד: כותרת-ההשראה מעל סרטון "המירוץ למיליון". לא מחליף את
-// גופן האתר.
+// גופן כתב-יד עברי עגול לשימוש נקודתי בחוברת.
 const gveretLevin = localFont({
   src: "../fonts/GveretLevin-Regular.ttf",
   variable: "--font-gveret",
   display: "swap",
 });
-
-// TODO(תוכן): כתובת האתר תתעדכן לפי דומיין ה-Vercel של פרויקט הזוויות.
-const SITE_URL = "https://zaviyot.vercel.app";
-// TODO(תוכן): התיאור זמני — יוחלף בתוכן האמיתי שיינתן.
-const SITE_DESC =
-  "יחידת לימוד מתוקשבת במתמטיקה בנושא זוויות. הדרכה במחוז ירושלים — מנח״י, בהובלת איילת קריספין.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),

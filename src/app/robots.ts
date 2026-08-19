@@ -1,9 +1,7 @@
 import type { MetadataRoute } from "next";
+import { SITE_URL } from "@/lib/site";
 
-// זהה במבנה ל-robots של האתר הראשי. מסלולי הקורא/ההדפסה מסומנים noindex בדפים
-// עצמם (robots: { index: false }), ולכן אינם כלולים ב-sitemap.
-const SITE_URL = "https://zaviyot.vercel.app";
-
+// מסלולי הקורא/ההדפסה מסומנים noindex בדפים עצמם, ולכן אינם כלולים ב-sitemap.
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: { userAgent: "*", allow: "/" },
