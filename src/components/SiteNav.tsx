@@ -24,6 +24,7 @@ export function SiteNav() {
   // ל"חוברת הדיגיטלית".
   const inWorksheetsList = pathname === "/worksheets" || pathname.startsWith("/worksheets/w/");
   const inBooklet = !inWorksheetsList && pathname.startsWith("/worksheets");
+  const inVideos = pathname === "/videos" || pathname.startsWith("/videos/");
 
   return (
     <nav className="sitenav" aria-label="ניווט בעמוד">
@@ -51,6 +52,9 @@ export function SiteNav() {
             17.7.2026: כפתור אחד בתפריט — ההורדה בתפריט הפנימי). */}
         <Link className="sitenav__link" href="/worksheets" aria-current={inWorksheetsList ? "page" : undefined}>
           דפי עבודה
+        </Link>
+        <Link className="sitenav__link" href="/videos" aria-current={inVideos ? "page" : undefined}>
+          סרטוני המחשה
         </Link>
         <AccessoriesNavMenu />
       </div>
