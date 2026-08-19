@@ -12,6 +12,11 @@ export const ILLUSTRATION_VIDEOS: readonly IllustrationVideo[] = [
     title: "פתיח לזוויות - איילת קריספין",
     youtubeId: "eKxw0UCPeAs",
   },
+  {
+    id: "zaviyot-ve-revia-rishon",
+    title: "זוויות ורביע ראשון",
+    youtubeId: "q2CQ-DavCPs",
+  },
 ] as const;
 
 export function youtubeWatchUrl(youtubeId: string): string {
