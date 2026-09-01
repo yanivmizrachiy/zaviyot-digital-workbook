@@ -56,8 +56,7 @@ export function Book95Viewer() {
         void fetch(`/api/book95/${n}?embed=1`, {
           cache: "force-cache",
           signal: controller.signal,
-          priority: "low",
-        } as RequestInit).catch(() => undefined);
+        }).catch(() => undefined);
       });
     }, 120);
     return () => {
@@ -141,7 +140,6 @@ export function Book95Viewer() {
           title={`דף עבודה ${page} מתוך ${BOOK95_TOTAL}`}
           onLoad={() => setReady(true)}
           loading="eager"
-          fetchPriority="high"
         />
       </div>
 
