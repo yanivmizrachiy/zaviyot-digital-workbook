@@ -1,0 +1,64 @@
+name: Book95 PDF
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "src/lib/book95.ts"
+      - "src/app/api/book95/**"
+      - "src/app/book95/**"
+      - "src/components/book95/**"
+      - "scripts/build-book95-pdf.mjs"
+      - "package.json"
+      - "package-lock.json"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: book95-pdf-main
+  cancel-in-progress: true
+
+jobs:
+  generate:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.22.0
+          cache: npm
+
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run build
+
+      - name: Resolve Chrome
+        shell: bash
+        run: |
+          CHROME_PATH="$(command -v google-chrome || command -v google-chrome-stable || command -v chromium || true)"
+          test -n "$CHROME_PATH"
+          echo "CHROME_PATH=$CHROME_PATH" >> "$GITHUB_ENV"
+
+      - name: Generate and verify 95-page PDF
+        run: npm run pdf:book95
+
+      - name: Commit canonical PDF
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/booklet/hoveret-zaviyot-95.pdf
+          if git diff --cached --quiet; then
+            echo "PDF unchanged"
+            exit 0
+          fi
+          git commit -m "chore: update canonical 95-page booklet PDF"
+          git push origin HEAD:main
