@@ -19,8 +19,8 @@ export function Book95PrintDialog({
   const dialogRef = useRef<HTMLDialogElement>(null);
   const [scope, setScope] = useState<Scope>("all");
   const [tone, setTone] = useState<Tone>("color");
-  const [from, setFrom] = useState(1);
-  const [to, setTo] = useState(BOOK95_TOTAL);
+  const [from, setFrom] = useState<number>(1);
+  const [to, setTo] = useState<number>(BOOK95_TOTAL);
 
   useEffect(() => {
     const dialog = dialogRef.current;
