@@ -1,39 +1,53 @@
 import type { Metadata } from "next";
-import { WS_PAGES } from "@/components/worksheets/registry";
+import { WS_PAGES, WS_TOTAL } from "@/components/worksheets/registry";
 import { PrintAutoTrigger } from "@/components/worksheets/PrintAutoTrigger";
 import { worksheetContentNode } from "@/components/worksheets/WorksheetPageRenderer";
 
-// חוברת מלאה להדפסה / שמירה כ-PDF — כל העמודים ברצף, A4 לכל עמוד.
-// הקישורים נשמרים לחיצים ב-PDF: חיצוניים (מייל/אתר/Matific) כ-<a>, ותוכן
-// העניינים כעוגנים פנימיים (#bk-page-N). ?print=1 פותח מיד את חלון ההדפסה.
-// המיפוי (איזה רכיב לכל עמוד) מגיע מ-WorksheetPageRenderer המשותף — המצגת
-// מוצגת כעמוד-קישור (presentation: "link") כי אינה ניתנת להטמעה ב-PDF.
 export const metadata: Metadata = {
   title: "הוראת זוויות בכיתה ז׳ — החוברת המלאה (הדפסה / PDF)",
   robots: { index: false },
 };
 
+function parsePages(raw?: string) {
+  if (!raw || raw === "all") return Array.from({ length: WS_TOTAL }, (_, i) => i + 1);
+  const pages = new Set<number>();
+  for (const tokenRaw of raw.split(",")) {
+    const token = tokenRaw.trim();
+    if (!token) continue;
+    const range = token.match(/^(\d+)\s*-\s*(\d+)$/);
+    if (range) {
+      const a = Math.max(1, Math.min(WS_TOTAL, Number(range[1])));
+      const b = Math.max(1, Math.min(WS_TOTAL, Number(range[2])));
+      for (let n = Math.min(a, b); n <= Math.max(a, b); n++) pages.add(n);
+      continue;
+    }
+    const n = Number(token);
+    if (Number.isInteger(n) && n >= 1 && n <= WS_TOTAL) pages.add(n);
+  }
+  return pages.size ? [...pages].sort((a, b) => a - b) : Array.from({ length: WS_TOTAL }, (_, i) => i + 1);
+}
+
 export default async function BookletPrintPage({
   searchParams,
 }: {
-  searchParams: Promise<{ print?: string }>;
+  searchParams: Promise<{ print?: string; pages?: string }>;
 }) {
   const sp = await searchParams;
+  const pages = parsePages(sp.pages);
 
   return (
     <div className="bkprint">
       {sp.print === "1" && <PrintAutoTrigger />}
-      {WS_PAGES.map((page, i) => {
-        const n = i + 1;
+      {pages.map((n) => {
+        const page = WS_PAGES[n - 1];
         const node = worksheetContentNode(page, {
           slot: n,
           presentation: "link",
           tocHrefFor: (p) => `#bk-page-${p}`,
         });
         return (
-          <section className="bkprint__page" id={`bk-page-${n}`} key={i}>
+          <section className="bkprint__page" id={`bk-page-${n}`} key={n}>
             {page.kind === "cover" ? (
-              // עטיפת שער בהדפסה — כפי שהיה לפני איחוד ה-renderer (חיתוך overflow ורקע לבן)
               <div style={{ width: "100%", height: "100%", overflow: "hidden", background: "#fff" }}>{node}</div>
             ) : (
               node
