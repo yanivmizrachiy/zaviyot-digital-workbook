@@ -30,13 +30,14 @@ function parsePages(raw?: string) {
 export default async function BookletPrintPage({
   searchParams,
 }: {
-  searchParams: Promise<{ print?: string; pages?: string }>;
+  searchParams: Promise<{ print?: string; pages?: string; tone?: string }>;
 }) {
   const sp = await searchParams;
   const pages = parsePages(sp.pages);
+  const bw = sp.tone === "bw";
 
   return (
-    <div className="bkprint">
+    <div className={`bkprint${bw ? " ws-bw" : ""}`}>
       {sp.print === "1" && <PrintAutoTrigger />}
       {pages.map((n) => {
         const page = WS_PAGES[n - 1];
