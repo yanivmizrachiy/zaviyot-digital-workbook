@@ -9,9 +9,10 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
-    "test": "node --experimental-strip-types --test test/worksheets.test.ts test/sitemap.test.ts test/print-ready.test.ts test/flipbook.test.ts test/aids.test.ts",
+    "test": "node --experimental-strip-types --test test/worksheets.test.ts test/sitemap.test.ts test/print-ready.test.ts test/flipbook.test.ts test/aids.test.ts test/book95.test.ts",
     "typecheck": "tsc --noEmit",
     "pdf": "node scripts/build-booklet-pdf.mjs",
+    "pdf:book95": "node scripts/build-book95-pdf.mjs",
     "lint:ci": "eslint . --max-warnings=0",
     "check": "npm run lint:ci && npm run typecheck && npm test && npm run build && npm run test:routes",
     "test:routes": "node --experimental-strip-types --test test/routes.test.ts"
