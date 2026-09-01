@@ -60,6 +60,17 @@
   border-color: #f8fafc;
 }
 
+.toolbar .bookletDownload {
+  background: #0ea5e9;
+  border-color: #38bdf8;
+  color: #fff;
+  box-shadow: 0 5px 18px rgba(14,165,233,.25);
+}
+.toolbar .bookletDownload:hover:not(:disabled) {
+  background: #0284c7;
+  border-color: #7dd3fc;
+}
+
 .counter {
   display: flex;
   align-items: center;
@@ -129,6 +140,7 @@
   .spacer { display: none; }
   .toolbar button,
   .linkButton { flex: 1 1 auto; text-align: center; padding: 10px 8px; font-size: .88rem; }
+  .toolbar .bookletDownload { flex-basis: 100%; min-height: 48px; }
   .counter { order: -1; width: 100%; justify-content: center; }
   .counter input { width: 58px; }
   .stage {
