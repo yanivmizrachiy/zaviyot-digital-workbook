@@ -1,7 +1,6 @@
 "use client";
 
 import {
-  type CSSProperties,
   useCallback,
   useEffect,
   useMemo,
@@ -12,8 +11,11 @@ import {
   WORKSHEETS_TOTAL,
   WS_GROUPS,
   WS_PAGES,
+  WS_PDF_DOWNLOAD_NAME,
+  WS_PDF_URL,
   WS_TOTAL,
 } from "@/components/worksheets/registry";
+import { ZaviyotPrintDialog } from "./ZaviyotPrintDialog";
 import styles from "./reader.module.css";
 
 const A4_W = 794;
@@ -23,7 +25,6 @@ const PAGE_KEY = "zaviyot:reader:last-page";
 const SELECTED_KEY = "zaviyot:reader:selected";
 
 type ReaderMode = "single" | "spread" | "scroll";
-
 type HistoryKind = "push" | "replace";
 
 function clampPage(value: number) {
@@ -71,6 +72,9 @@ export function RazPagesZaviyotReader() {
   const [mobileActions, setMobileActions] = useState(false);
   const [stageWidth, setStageWidth] = useState(1000);
   const [viewportHeight, setViewportHeight] = useState(900);
+  const [printOpen, setPrintOpen] = useState(false);
+  const [printPages, setPrintPages] = useState<number[]>([1]);
+  const [printLabel, setPrintLabel] = useState("העמוד הנוכחי");
   const searchRef = useRef<HTMLInputElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
 
@@ -140,15 +144,15 @@ export function RazPagesZaviyotReader() {
   }, []);
 
   const goTo = useCallback((value: number, history: HistoryKind = "push") => {
-    const next = clampPage(value);
-    setPage(next);
-    writeUrl(next, mode, history);
+    const nextPage = clampPage(value);
+    setPage(nextPage);
+    writeUrl(nextPage, mode, history);
     if (window.matchMedia("(max-width: 820px)").matches) setTocOpen(false);
   }, [mode, writeUrl]);
 
-  const changeMode = useCallback((next: ReaderMode) => {
-    setMode(next);
-    writeUrl(page, next, "push");
+  const changeMode = useCallback((nextMode: ReaderMode) => {
+    setMode(nextMode);
+    writeUrl(page, nextMode, "push");
   }, [page, writeUrl]);
 
   const step = mode === "spread" ? 2 : 1;
@@ -246,9 +250,10 @@ export function RazPagesZaviyotReader() {
     });
   };
 
-  const openPrint = (pages: number[] | "all") => {
-    const value = pages === "all" ? "all" : pages.join(",");
-    window.open(`/worksheets/print?pages=${encodeURIComponent(value)}&print=1`, "_blank", "noopener,noreferrer");
+  const requestPrint = (pages: number[], label: string) => {
+    setPrintPages(pages);
+    setPrintLabel(label);
+    setPrintOpen(true);
   };
 
   const downloadHtml = async () => {
@@ -268,6 +273,7 @@ export function RazPagesZaviyotReader() {
 
   const currentTitle = WS_PAGES[page - 1]?.title ?? `עמוד ${page}`;
   const selectedPages = [...selected].sort((a, b) => a - b);
+  const currentGroupPages = Array.from({ length: currentGroup.to - currentGroup.from + 1 }, (_, i) => currentGroup.from + i);
 
   return (
     <div className={styles.reader} dir="rtl">
@@ -348,11 +354,12 @@ export function RazPagesZaviyotReader() {
           <div className={styles.pageMeta}>
             <div><strong>{currentTitle}</strong><span>{currentGroup.title} · עמוד {page} מתוך {WS_TOTAL}</span></div>
             <div className={styles.actions}>
-              <button onClick={() => openPrint([page])}>🖨 הדפסה</button>
-              <button onClick={() => openPrint([page])}>⬇ PDF</button>
+              <button onClick={() => requestPrint([page], "העמוד הנוכחי")}>🖨 הדפסה</button>
+              <button onClick={() => requestPrint([page], "העמוד הנוכחי")}>⬇ PDF</button>
               <button onClick={() => void downloadHtml()}>HTML</button>
               <button onClick={() => window.open(`/worksheets/${page}`, "_blank", "noopener,noreferrer")}>↗ פתח</button>
-              <button onClick={() => openPrint(Array.from({ length: currentGroup.to - currentGroup.from + 1 }, (_, i) => currentGroup.from + i))}>🖨 פרק</button>
+              <button onClick={() => requestPrint(currentGroupPages, currentGroup.title)}>🖨 פרק</button>
+              <a className={styles.quickDownload} href={WS_PDF_URL} download={WS_PDF_DOWNLOAD_NAME}>⬇ חוברת דפי העבודה</a>
             </div>
           </div>
 
@@ -387,8 +394,8 @@ export function RazPagesZaviyotReader() {
       {selectionMode && (
         <div className={styles.selectionBar}>
           <strong>{selected.size} נבחרו</strong>
-          <button disabled={!selected.size} onClick={() => openPrint(selectedPages)}>הדפסת הנבחרים</button>
-          <button disabled={!selected.size} onClick={() => openPrint(selectedPages)}>PDF לנבחרים</button>
+          <button disabled={!selected.size} onClick={() => requestPrint(selectedPages, "העמודים שנבחרו")}>הדפסת הנבחרים</button>
+          <button disabled={!selected.size} onClick={() => requestPrint(selectedPages, "העמודים שנבחרו")}>PDF לנבחרים</button>
           <button onClick={() => setSelected(new Set())}>נקה בחירה</button>
         </div>
       )}
@@ -409,15 +416,23 @@ export function RazPagesZaviyotReader() {
               <button className={mode === "single" ? styles.activeMode : ""} onClick={() => { changeMode("single"); setMobileActions(false); }}>עמוד</button>
               <button className={mode === "scroll" ? styles.activeMode : ""} onClick={() => { changeMode("scroll"); setMobileActions(false); }}>גלילה רציפה</button>
             </div>
-            <button onClick={() => openPrint([page])}>הדפסת העמוד / PDF</button>
+            <button onClick={() => { requestPrint([page], "העמוד הנוכחי"); setMobileActions(false); }}>הדפסת העמוד / PDF</button>
             <button onClick={() => void downloadHtml()}>הורדת HTML</button>
+            <a className={styles.mobileDownload} href={WS_PDF_URL} download={WS_PDF_DOWNLOAD_NAME}>הורדת חוברת דפי העבודה PDF</a>
             <button onClick={() => window.open(`/worksheets/${page}`, "_blank", "noopener,noreferrer")}>פתיחה בכרטיסייה</button>
-            <button onClick={() => openPrint(Array.from({ length: currentGroup.to - currentGroup.from + 1 }, (_, i) => currentGroup.from + i))}>הדפסת הפרק</button>
+            <button onClick={() => { requestPrint(currentGroupPages, currentGroup.title); setMobileActions(false); }}>הדפסת הפרק</button>
             <button onClick={() => { selectGroup(currentGroup.from, currentGroup.to); setSelectionMode(true); setMobileActions(false); }}>בחירת הפרק</button>
             <button className={styles.closeSheet} onClick={() => setMobileActions(false)}>סגירה</button>
           </section>
         </div>
       )}
+
+      <ZaviyotPrintDialog
+        open={printOpen}
+        pages={printPages}
+        label={printLabel}
+        onClose={() => setPrintOpen(false)}
+      />
     </div>
   );
 }
